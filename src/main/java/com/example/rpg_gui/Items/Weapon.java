@@ -1,0 +1,44 @@
+package com.example.rpg_gui.Items;
+
+import com.example.rpg_gui.Characters.Hero;
+
+import static com.example.rpg_gui.Characters.Hero.HeroType.Warrior;
+import static com.example.rpg_gui.Characters.Hero.HeroType.Archer;
+import static com.example.rpg_gui.Characters.Hero.HeroType.Mage;
+
+public class Weapon extends Item {
+    private int bonusDamage;
+    private Hero.HeroType allowedHero;
+
+    public int getBonusDamage () {
+        return bonusDamage;
+    }
+    public Hero.HeroType getAllowedHero() {
+        return allowedHero;
+    }
+
+    public Weapon(String name, int price, Hero.HeroType allowedHero, int bonusDamage) {
+        super(name, price);
+        this.allowedHero = allowedHero;
+        this.bonusDamage = bonusDamage;
+    }
+
+    @Override
+    public void use(Hero hero) {
+        if (hero == null) return;
+        hero.setEquippedWeapon(this);
+    }
+    @Override
+    public Item copy() {
+        return new Weapon(getItemName(), getItemPrice(), allowedHero, bonusDamage);
+    }
+    public static final Weapon woodenSword = new Weapon ("Wooden Sword", 15, Warrior, 2);
+    public static final Weapon woodenBow = new Weapon ("Wooden Bow", 15, Archer, 2);
+    public static final Weapon woodenStaff = new Weapon ("Wooden Staff", 15, Mage, 2);
+    public static final Weapon ironSword = new Weapon ("Iron Sword", 70, Warrior, 10);
+    public static final Weapon ironBow = new Weapon ("Iron Bow", 70, Archer, 10);
+    public static final Weapon ironStaff = new Weapon ("Iron Staff", 70, Mage, 10);
+    public static final Weapon goldSword = new Weapon ("Gold Sword", 120, Warrior, 20);
+    public static final Weapon goldBow = new Weapon ("Gold Bow", 120, Archer, 20);
+    public static final Weapon goldStaff = new Weapon ("Gold Staff", 120, Mage, 20);
+}

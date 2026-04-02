@@ -1,0 +1,52 @@
+package com.example.rpg_gui.Systems;
+
+import com.example.rpg_gui.Characters.Hero;
+import com.example.rpg_gui.Items.Item;
+import com.example.rpg_gui.map.*;
+
+public class interactionSystem {
+    public static void interact(Hero hero, Map map) {
+        Position p=hero.getPosition();
+
+        int[][] dists={{0,1},{0,-1},{1,0},{-1,0}};
+
+        for(int[] dist:dists) {
+            int checkX=p.getMyX()+dist[0];
+            int checkY=p.getMyY()+dist[1];
+
+            if(checkX>=0 && checkX<map.getWidth() && checkY>=0 && checkY<map.getHeight()){
+                Tile currentTile=map.getTiles()[checkY][checkX];
+
+                if(currentTile instanceof Chest) {
+                    Chest chest = (Chest) currentTile;
+
+                    if(!chest.isOpened()) {
+                        int money=chest.openChest();
+                        hero.earnMoney(money);
+
+                        currentTile.setType(TypeTile.Floor);
+                    }
+                    Item item = chest.getContainedItem();
+                    if (item != null) {
+                        hero.getInventory().addItem(item);
+                        System.out.println("Из сундука выпал предмет: " + item.getItemName() + "!");
+                    }
+                }
+                if (currentTile instanceof Door) {
+                    Door door = (Door) currentTile;
+
+                    if (door.isLocked()) {
+                        // Проверяем, есть ли у героя ключ с таким же кодом, как у двери
+                        if (hero.getInventory().hasKeyCode(door.getLockcode())) {
+                            System.out.println("Door opened");
+                            // Заменяем дверь на пол, чтобы через неё можно было пройти
+                            map.getTiles()[checkY][checkX] = new Tile(TypeTile.Floor);
+                        } else {
+                            System.out.println("To open this door you need: " + door.getLockcode());
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
