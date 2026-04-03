@@ -2,11 +2,18 @@ package com.example.rpg_gui.Systems;
 
 import com.example.rpg_gui.Characters.Hero;
 import com.example.rpg_gui.Items.Item;
+import com.example.rpg_gui.core.GameEngine;
 import com.example.rpg_gui.map.*;
 
 public class interactionSystem {
-    public static void interact(Hero hero, Map map) {
+    public static void interact(Hero hero, Map map, GameEngine engine) {
         Position p=hero.getPosition();
+        TypeTile type = map.getTiles()[p.getMyY()][p.getMyX()].getType();
+
+        if (type == TypeTile.PortalTile) {
+            engine.switchMap();
+            return;
+        }
 
         int[][] dists={{0,1},{0,-1},{1,0},{-1,0}};
 
@@ -19,17 +26,15 @@ public class interactionSystem {
 
                 if(currentTile instanceof Chest) {
                     Chest chest = (Chest) currentTile;
-
                     if(!chest.isOpened()) {
                         int money=chest.openChest();
                         hero.earnMoney(money);
-
                         currentTile.setType(TypeTile.Floor);
                     }
                     Item item = chest.getContainedItem();
                     if (item != null) {
                         hero.getInventory().addItem(item);
-                        System.out.println("Из сундука выпал предмет: " + item.getItemName() + "!");
+                        System.out.println("From chest you got " + item.getItemName() + "!");
                     }
                 }
                 if (currentTile instanceof Door) {
@@ -45,6 +50,10 @@ public class interactionSystem {
                             System.out.println("To open this door you need: " + door.getLockcode());
                         }
                     }
+                }
+                if(currentTile.getType()==TypeTile.AcademyTile) {
+                    AcademySystem.teachSkills(hero);
+                    return;
                 }
             }
         }

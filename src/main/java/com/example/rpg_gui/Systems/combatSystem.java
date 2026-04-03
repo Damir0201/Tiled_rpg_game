@@ -20,7 +20,8 @@ public class combatSystem {
         }
         if (target != null) {
             System.out.println("\nYour turn");
-            hero.attack("Slash", 25, 5, target);
+//            hero.attack("Slash", 25, 5, target);
+            hero.useSelectedAttack(target);
             if (target.isAlive()) {
                 System.out.println("Enemy's turn");
 
