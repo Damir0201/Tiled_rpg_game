@@ -18,6 +18,7 @@ public class Hero extends Character {
     protected int exp;
     protected int maxExp = 100; //exp to next level
     protected int attackDistance;
+    protected int currentAttackIndex = 0;
     protected ArrayList<String> learnedAttacks = new ArrayList<String>();
     protected Inventory inventory = new Inventory();
 
@@ -154,6 +155,10 @@ public class Hero extends Character {
             this.checkEnemyDeath(enemy);
         }
     }
+
+    public void useSelectedAttack(Enemy... enemies) {
+    }
+
     public void restoreHealth (int amount) {
         this.health += amount;
         if (this.health > maxHealth) {
@@ -222,5 +227,18 @@ public class Hero extends Character {
     }
     public Inventory getInventory() {
         return this.inventory; // Проверь, чтобы поле называлось именно inventory
+    }
+    public void switchAttack() {
+        if (learnedAttacks.isEmpty()) {
+            System.out.println("No skills learned yet!");
+            return;
+        }
+        currentAttackIndex = (currentAttackIndex + 1) % learnedAttacks.size();
+        System.out.println("Selected skill: " + getSelectedAttackName());
+    }
+    // Получить имя текущей выбранной атаки
+    public String getSelectedAttackName() {
+        if (learnedAttacks.isEmpty()) return "None";
+        return learnedAttacks.get(currentAttackIndex);
     }
 }

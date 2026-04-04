@@ -7,26 +7,23 @@ public class Warrior extends Hero {
 
         this.maxHealth = (int)(this.maxHealth *1.2);
         this.health = maxHealth;
-
-        //this.attackDistance = 1;
+        this.attackDistance = 1;
     }
 
-    public void slash (Enemy... enemies) {
-        attack("Slash", 15, 0, enemies);
-    }
-    public void fireSword (Enemy... enemies) {
-        attack("Fire Sword", 20, 25, enemies);
-    }
-    public void doubleSlash (Enemy... enemies) {
-        attack("Double Slash", 25, 0, enemies);
-    }
-    public void iceSword (Enemy... enemies) {
-        attack("Ice Sword", 30, 30, enemies);
-    }
-    public void earthBreaker (Enemy... enemies) {
-        attack("Earth Breaker", 35, 0, enemies);
-    }
-    public void poisonSword (Enemy... enemies) {
-        attack("Poison Sword", 40, 35, enemies);
+    @Override
+    public void useSelectedAttack(Enemy... enemies) {
+        String skill = getSelectedAttackName();
+        int damage = 0;
+        int manaCost = 0;
+        switch (skill) {
+            case "Slash" -> { damage = 25; manaCost = 0; }
+            case "Fire Sword" -> { damage = 30; manaCost = 15; }
+            case "Ice Sword" -> { damage = 35; manaCost = 20; }
+            case "Double Slash" -> { damage = 40; manaCost = 0; }
+            case "Earth Breaker" -> { damage = 45; manaCost = 0; }
+            case "Poison Sword" -> { damage = 50; manaCost = 25; }
+            default -> { damage = 10; manaCost = 0; }
+        }
+        this.attack(skill, damage, manaCost, enemies);
     }
 }
