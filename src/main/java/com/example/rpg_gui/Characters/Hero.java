@@ -155,20 +155,10 @@ public class Hero extends Character {
             this.checkEnemyDeath(enemy);
         }
     }
-    public void useSelectedAttack(Enemy target) {
-        String skill = getSelectedAttackName();
-        int damage = 0;
-        int manaCost = 0;
-        switch (skill) {
-            case "Slash" -> { damage = 25; manaCost = 5; }
-            case "Fire Sword" -> { damage = 40; manaCost = 15; }
-            case "Ice Sword" -> { damage = 45; manaCost = 20; }
-            case "Double Slash" -> { damage = 50; manaCost = 25; }
-            case "Earth Breaker" -> { damage = 30; manaCost = 0; }
-            default -> { damage = 10; manaCost = 0; }
-        }
-        this.attack(skill, damage, manaCost, target);
+
+    public void useSelectedAttack(Enemy... enemies) {
     }
+
     public void restoreHealth (int amount) {
         this.health += amount;
         if (this.health > maxHealth) {
@@ -246,7 +236,6 @@ public class Hero extends Character {
         currentAttackIndex = (currentAttackIndex + 1) % learnedAttacks.size();
         System.out.println("Selected skill: " + getSelectedAttackName());
     }
-
     // Получить имя текущей выбранной атаки
     public String getSelectedAttackName() {
         if (learnedAttacks.isEmpty()) return "None";

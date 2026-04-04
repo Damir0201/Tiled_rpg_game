@@ -16,6 +16,7 @@ public class HelloApplication extends Application {
         Pane uiPane = new Pane();
         mainLayout.getChildren().addAll(gamePane, uiPane);
         GameEngine gameEngine = new GameEngine(gamePane, uiPane);
+
         gameEngine.initGame();
 
         Scene scene = new Scene(mainLayout, 800, 740);

@@ -15,6 +15,12 @@ public class interactionSystem {
             return;
         }
 
+        TypeTile type = map.getTiles()[p.getMyY()][p.getMyX()].getType();
+        if (type == TypeTile.PortalTile) {
+            engine.switchMap();
+            return;
+        }
+
         int[][] dists={{0,1},{0,-1},{1,0},{-1,0}};
 
         for(int[] dist:dists) {

@@ -12,6 +12,7 @@ public enum TypeTile {
     ShopTile('S',true),
     DoorTile('D',true),
     PortalTile('P', false);
+
     private final char symbol;
     private final boolean collision;
 

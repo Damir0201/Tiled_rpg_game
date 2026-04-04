@@ -32,6 +32,7 @@ public class Map {
     public List<Enemy> getEnemies() {
         return enemies;
     }
+
     public void printMap(Position playerPos) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {

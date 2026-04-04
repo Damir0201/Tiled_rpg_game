@@ -15,6 +15,7 @@ import com.example.rpg_gui.map.TypeTile;
 import com.example.rpg_gui.Systems.movementSystem;
 import com.example.rpg_gui.Characters.Hero;
 import java.util.Objects;
+import java.util.Random;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -45,7 +46,7 @@ public class GameEngine {
 
 
     public GameEngine(Pane root, Pane uiPane) {
-        this.root=root;
+        this.root = root;
         this.uiPane=uiPane;
         loadResources();
     }
@@ -77,6 +78,7 @@ public class GameEngine {
         AcademySystem.teachSkills(myHero);
         render();
     }
+
     public void switchMap() {
         if (this.map == hubMap) {
             this.map = dungeonMap;
@@ -88,6 +90,7 @@ public class GameEngine {
             System.out.println("you returned to hub");
         }
     }
+
     public void handleInput(KeyCode code) {
         switch (code) {
             case W -> movementSystem.move(myHero.getPosition(), map, 0, -1);
@@ -100,6 +103,7 @@ public class GameEngine {
         }
         render();
     }
+
     public void render(){
         root.getChildren().clear();
         renderWorld();
@@ -108,6 +112,7 @@ public class GameEngine {
     }
     public void renderWorld() {
 
+        // 1. РИСУЕМ КАРТУ
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
                 Rectangle rect = new Rectangle(x * Tile_Size, y * Tile_Size, Tile_Size, Tile_Size);
