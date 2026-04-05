@@ -104,14 +104,10 @@ public class Hero extends Character {
         super (name);
         this.type = type;
         this.mana = maxMana;
+        this.health = maxHealth;
         this.money = 100;
         this.level = 1;
         this.exp = 0;
-        if (type == HeroType.Warrior) {
-            this.attackDistance = 1;
-        } else {
-            this.attackDistance = 3;
-        }
     }
 
 

@@ -1,6 +1,6 @@
 package com.example.rpg_gui.core;
 
-import com.example.rpg_gui.Characters.Hero.HeroType;
+import com.example.rpg_gui.Characters.*;
 import com.example.rpg_gui.Systems.AcademySystem;
 import com.example.rpg_gui.Systems.interactionSystem;
 import com.example.rpg_gui.map.generators.DungeonGenerator;
@@ -15,7 +15,6 @@ import com.example.rpg_gui.map.TypeTile;
 import com.example.rpg_gui.Systems.movementSystem;
 import com.example.rpg_gui.Characters.Hero;
 import java.util.Objects;
-import java.util.Random;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -57,7 +56,7 @@ public class GameEngine {
         wallPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Wall.png"))));
         riverPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/River.png"))));
         trapPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Trap.png"))));
-        heroPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/ArmoredW.png"))));
+        heroPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/HeroBoy.png"))));
         orcPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Orc.png"))));
         floorPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Floor.png"))));
         chestPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Chest.png"))));
@@ -71,8 +70,8 @@ public class GameEngine {
         this.hubMap = new Map(10, 15, new HubGenerator());
         this.dungeonMap = new Map(20, 25, new DungeonGenerator());
         this.map = hubMap;
-        this.myHero = new Hero("Damira", HeroType.Warrior);
-        this.myHero.learnAttack("Slash", 1);
+        this.myHero = new Archer();
+        //this.myHero.learnAttack("Slash", 1);
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
         AcademySystem.teachSkills(myHero);
