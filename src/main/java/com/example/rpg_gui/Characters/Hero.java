@@ -1,6 +1,6 @@
 package com.example.rpg_gui.Characters;
 
-import com.example.rpg_gui.Systems.Inventory;
+import com.example.rpg_gui.Systems.inventorySystem;
 import com.example.rpg_gui.Items.*;
 
 import java.util.ArrayList;
@@ -20,11 +20,12 @@ public class Hero extends Character {
     protected int attackDistance;
     protected int currentAttackIndex = 0;
     protected ArrayList<String> learnedAttacks = new ArrayList<String>();
-    protected Inventory inventory = new Inventory();
+    protected inventorySystem inventorySystem = new inventorySystem();
 
     public HeroType getHero () {return type;}
     public int getMoney () {return money;}
     public int getAttackDistance() {return attackDistance;}
+    public inventorySystem getInventory() {return this.inventorySystem;}
 
 
     public void gainExp (int amount) {
@@ -63,16 +64,6 @@ public class Hero extends Character {
     }
 
 
-    public void showAttackList() {
-        System.out.println("Your skills: ");
-        if (learnedAttacks.isEmpty()) {
-            System.out.println("You have not learned any attacks yet. Go to the Academy");
-            return;
-        }
-        for (String attack: learnedAttacks) {
-            System.out.println("- " + attack);
-        }
-    }
     public int getMaxHealth() {
         return this.maxHealth;
     }
@@ -84,7 +75,7 @@ public class Hero extends Character {
     public void setEquippedArmor (Armor armor) {
         if (armor == null) return;
         if (this.equippedArmor != null) {
-            inventory.addItem(this.equippedArmor);
+            inventorySystem.addItem(this.equippedArmor);
         }
         this.equippedArmor = armor;
         System.out.println("Armor equipped: " + armor.getItemName());
@@ -94,7 +85,7 @@ public class Hero extends Character {
     public void setEquippedWeapon (Weapon weapon) {
         if(weapon==null) return;
         if(this.equippedWeapon!=null) {
-            inventory.addItem(this.equippedWeapon);
+            inventorySystem.addItem(this.equippedWeapon);
         }
         this.equippedWeapon = weapon;
         System.out.println("Weapon equipped: " + weapon.getItemName());
@@ -122,11 +113,9 @@ public class Hero extends Character {
         System.out.println("Your total money: " + money);
     }
     public void addItem (Item item) {
-        inventory.addItem(item);
+        inventorySystem.addItem(item);
     }
-    public void openInventory (){
-        inventory.open(this);
-    }
+
 
     public void attack (String attackName, int damage, int manaNeed, Enemy... enemies) {
         if (!this.isAlive() || enemies == null || enemies.length == 0) return;
@@ -211,19 +200,7 @@ public class Hero extends Character {
         }
     }
 
-    public void showStatus() {
-        System.out.println("\t" + getHero());
-        System.out.println("\tHealth:\t\t" + health + "/" + maxHealth);
-        System.out.println("\tMana:\t\t" + mana + "/" + maxMana);
-        System.out.println("\tMoney:\t\t" + money);
-        System.out.println("\tLevel:\t\t" + level);
-        System.out.println("\tExp:\t\t" + exp + "/" + maxExp);
-        System.out.println("\tWeapon:\t\t" + (equippedWeapon != null ? equippedWeapon.getItemName() : "None"));
-        System.out.println("\tArmor:\t\t" + (equippedArmor != null ? equippedArmor.getItemName() : "None"));
-    }
-    public Inventory getInventory() {
-        return this.inventory; // Проверь, чтобы поле называлось именно inventory
-    }
+
     public void switchAttack() {
         if (learnedAttacks.isEmpty()) {
             System.out.println("No skills learned yet!");
@@ -232,7 +209,8 @@ public class Hero extends Character {
         currentAttackIndex = (currentAttackIndex + 1) % learnedAttacks.size();
         System.out.println("Selected skill: " + getSelectedAttackName());
     }
-    // Получить имя текущей выбранной атаки
+
+
     public String getSelectedAttackName() {
         if (learnedAttacks.isEmpty()) return "None";
         return learnedAttacks.get(currentAttackIndex);

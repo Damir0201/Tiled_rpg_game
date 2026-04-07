@@ -1,12 +1,21 @@
 package com.example.rpg_gui.core;
 import com.example.rpg_gui.Characters.Hero;
+import com.example.rpg_gui.Systems.shopController;
+import com.example.rpg_gui.Systems.shopSystem;
 import com.example.rpg_gui.map.Map;
+import com.example.rpg_gui.Systems.inventoryController;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 public class UImanager {
     private Text healthText;
@@ -55,5 +64,48 @@ public class UImanager {
 
         healthBar=new Rectangle(15,35,150,12);
         healthBar.setFill(Color.RED);
+    }
+
+    public void showInventory(Hero hero) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/inventory.fxml"));
+            Parent root = loader.load();
+
+            inventoryController controller = loader.getController();
+            controller.initData(hero);
+
+            Stage stage = new Stage();
+            stage.setTitle("Inventory - " + hero.getName());
+            stage.initModality(Modality.APPLICATION_MODAL); // Замораживает основное окно
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error: cannot find a file inventory.fxml !");
+        }
+    }
+
+    public void showShop(Hero hero) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/shop.fxml"));
+            Parent root = loader.load();
+
+            shopController controller = loader.getController();
+
+            controller.initData(hero, shopSystem.getItemList());
+
+            Stage stage = new Stage();
+            stage.setTitle("Shop");
+
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            stage.setScene(new Scene(root));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error: cannot find a file shop.fxml!");
+        }
     }
 }

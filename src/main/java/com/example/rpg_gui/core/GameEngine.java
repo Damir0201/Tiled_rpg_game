@@ -1,7 +1,7 @@
 package com.example.rpg_gui.core;
 
 import com.example.rpg_gui.Characters.*;
-import com.example.rpg_gui.Systems.AcademySystem;
+import com.example.rpg_gui.Systems.academySystem;
 import com.example.rpg_gui.Systems.interactionSystem;
 import com.example.rpg_gui.map.generators.DungeonGenerator;
 import com.example.rpg_gui.map.generators.HubGenerator;
@@ -46,12 +46,11 @@ public class GameEngine {
 
     public GameEngine(Pane root, Pane uiPane) {
         this.root = root;
-        this.uiPane=uiPane;
+        this.uiPane = uiPane;
         loadResources();
     }
 
     private void loadResources() {
-        // Загружаем всё один раз в конструкторе
         grassPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Grass.png"))));
         wallPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Wall.png"))));
         riverPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/River.png"))));
@@ -74,7 +73,7 @@ public class GameEngine {
         //this.myHero.learnAttack("Slash", 1);
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
-        AcademySystem.teachSkills(myHero);
+        academySystem.teachSkills(myHero);
         render();
     }
 
@@ -97,8 +96,9 @@ public class GameEngine {
             case A -> movementSystem.move(myHero.getPosition(), map, -1, 0);
             case D -> movementSystem.move(myHero.getPosition(), map, 1, 0);
             case F -> combatSystem.tryAttack(myHero, map);
-            case E ->interactionSystem.interact(myHero, map, this);
-            case Q ->{myHero.switchAttack();System.out.println("Chosen attack is: "+myHero.getSelectedAttackName());}
+            case E -> interactionSystem.interact(myHero, map, this, uImanager);
+            case Q -> {myHero.switchAttack();System.out.println("Chosen attack is: "+myHero.getSelectedAttackName());}
+            case KeyCode.X -> uImanager.showInventory (myHero);
         }
         render();
     }
