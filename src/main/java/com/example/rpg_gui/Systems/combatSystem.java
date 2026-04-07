@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class combatSystem {
     public static void tryAttack(Hero hero, Map map) {
         Position hPos= hero.getPosition();
-        java.util.ArrayList<Enemy> targets = new java.util.ArrayList<>();
+        ArrayList<Enemy> targets = new ArrayList<>();
 
         for (Enemy e:map.getEnemies()) {
             if (!e.isAlive()) continue;

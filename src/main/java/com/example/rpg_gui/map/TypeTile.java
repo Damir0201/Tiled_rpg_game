@@ -7,7 +7,6 @@ public enum TypeTile {
     Water('_',true),
     Grass('G',false),
     ChestTile('C',true),
-    KeyTile('K',false),
     AcademyTile('A',true),
     ShopTile('S',true),
     DoorTile('D',true),
