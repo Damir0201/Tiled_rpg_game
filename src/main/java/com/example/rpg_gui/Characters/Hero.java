@@ -26,6 +26,20 @@ public class Hero extends Character {
     public int getMoney () {return money;}
     public int getAttackDistance() {return attackDistance;}
     public inventorySystem getInventory() {return this.inventorySystem;}
+    public int getLevel() {
+        return level;
+    }
+    public int getMana() {
+        return mana;
+    }
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+    public int getMaxMana() {
+        return this.maxMana;
+    }
+    public Armor getEquippedArmor() {return equippedArmor;}
+    public Weapon getEquippedWeapon() {return equippedWeapon;}
 
 
     public void gainExp (int amount) {
@@ -37,9 +51,7 @@ public class Hero extends Character {
         }
     }
 
-    public int getMana() {
-        return mana;
-    }
+
     public void levelUp() {
         level++;
         maxHealth += 10;
@@ -50,9 +62,8 @@ public class Hero extends Character {
         System.out.println("Level up to " + level);
         System.out.println("Go to the Academy to learn new spells");
     }
-    public int getLevel() {
-        return level;
-    }
+
+
     public void learnAttack (String attackName, int allowedLevel) {
         if (this.level < allowedLevel) {
             System.out.println("Your need level " + allowedLevel + " to learn " + attackName);
@@ -61,14 +72,6 @@ public class Hero extends Character {
         if (learnedAttacks.contains(attackName)) return;
         learnedAttacks.add(attackName);
         System.out.println("You learned new attack: " + attackName);
-    }
-
-
-    public int getMaxHealth() {
-        return this.maxHealth;
-    }
-    public int getMaxMana() {
-        return this.maxMana;
     }
 
 
@@ -91,6 +94,7 @@ public class Hero extends Character {
         System.out.println("Weapon equipped: " + weapon.getItemName());
     }
 
+
     public Hero (String name, HeroType type) {
         super (name);
         this.type = type;
@@ -107,11 +111,14 @@ public class Hero extends Character {
         System.out.println("You received " + amount + " coins");
         System.out.println(("Your total balance: "+money));
     }
+
     public void spendMoney (int amount) {
         money -= amount;
         System.out.println("You spent " + amount + " coins");
         System.out.println("Your total money: " + money);
     }
+
+
     public void addItem (Item item) {
         inventorySystem.addItem(item);
     }
@@ -139,28 +146,6 @@ public class Hero extends Character {
             enemy.takeDamage(finalDamage);
             this.checkEnemyDeath(enemy);
         }
-    }
-
-    public void useSelectedAttack(Enemy... enemies) {
-    }
-
-    public void restoreHealth (int amount) {
-        this.health += amount;
-        if (this.health > maxHealth) {
-            this.health = maxHealth;
-        }
-        System.out.println("You restored +" + amount + " health!");
-        System.out.println("Your total health " + this.health + "/" + maxHealth);
-    }
-
-
-    public void restoreMana (int amount) {
-        this.mana += amount;
-        if (this.mana > maxMana) {
-            this.mana = maxMana;
-        }
-        System.out.println("You restored +" + amount + " mana!");
-        System.out.println("Your total mana " + this.mana + "/" + maxMana);
     }
 
 
@@ -201,6 +186,9 @@ public class Hero extends Character {
     }
 
 
+    public void useSelectedAttack(Enemy... enemies) {
+    }
+
     public void switchAttack() {
         if (learnedAttacks.isEmpty()) {
             System.out.println("No skills learned yet!");
@@ -210,9 +198,27 @@ public class Hero extends Character {
         System.out.println("Selected skill: " + getSelectedAttackName());
     }
 
-
     public String getSelectedAttackName() {
         if (learnedAttacks.isEmpty()) return "None";
         return learnedAttacks.get(currentAttackIndex);
+    }
+
+
+    public void restoreHealth (int amount) {
+        this.health += amount;
+        if (this.health > maxHealth) {
+            this.health = maxHealth;
+        }
+        System.out.println("You restored +" + amount + " health!");
+        System.out.println("Your total health " + this.health + "/" + maxHealth);
+    }
+
+    public void restoreMana (int amount) {
+        this.mana += amount;
+        if (this.mana > maxMana) {
+            this.mana = maxMana;
+        }
+        System.out.println("You restored +" + amount + " mana!");
+        System.out.println("Your total mana " + this.mana + "/" + maxMana);
     }
 }

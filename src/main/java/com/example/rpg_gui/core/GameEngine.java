@@ -69,7 +69,7 @@ public class GameEngine {
         this.hubMap = new Map(10, 15, new HubGenerator());
         this.dungeonMap = new Map(20, 25, new DungeonGenerator());
         this.map = hubMap;
-        this.myHero = new Archer();
+        this.myHero = new Warrior();
         //this.myHero.learnAttack("Slash", 1);
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
@@ -105,13 +105,12 @@ public class GameEngine {
 
     public void render(){
         root.getChildren().clear();
+        //uiPane.getChildren().clear();
         renderWorld();
-        uiPane.getChildren().clear();
-        uImanager.drawHUD(uiPane, myHero, map);
+        uImanager.drawHUD(uiPane, myHero, map, 800);
     }
-    public void renderWorld() {
 
-        // 1. РИСУЕМ КАРТУ
+    public void renderWorld() {
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
                 Rectangle rect = new Rectangle(x * Tile_Size, y * Tile_Size, Tile_Size, Tile_Size);
