@@ -7,10 +7,11 @@ public enum TypeTile {
     Water('_',true),
     Grass('G',false),
     ChestTile('C',true),
-    KeyTile('K',false),
     AcademyTile('A',true),
-    ShopTile('S',false),
-    DoorTile('D',true);
+    ShopTile('S',true),
+    DoorTile('D',true),
+    PortalTile('P', false);
+
     private final char symbol;
     private final boolean collision;
 

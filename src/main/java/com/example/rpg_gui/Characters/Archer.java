@@ -5,24 +5,23 @@ public class Archer extends Hero{
     public Archer() {
         super("Archer", HeroType.Archer);
 
-        //this.attackDistance = 4;
+        this.attackDistance = 3;
     }
-    public void arrowShot (Enemy... enemies) {
-        attack("Arrow Shot", 15, 0, enemies);
-    }
-    public void fireArrow (Enemy...enemies) {
-        attack("Fire Arrow", 20, 25, enemies);
-    }
-    public void doubleShot (Enemy...enemies) {
-        attack("Double Shot", 25, 0, enemies);
-    }
-    public void iceArrow (Enemy...enemies) {
-        attack("Ice Arrow", 30, 30, enemies);
-    }
-    public void rainOfArrows (Enemy...enemies) {
-        attack("Rain of Arrows", 35, 0, enemies);
-    }
-    public void explosiveArrow (Enemy...enemies) {
-        attack("Explosive Arrow", 40, 35, enemies);
+
+    @Override
+    public void useSelectedAttack(Enemy... enemies) {
+        String skill = getSelectedAttackName();
+        int damage = 0;
+        int manaCost = 0;
+        switch (skill) {
+            case "Arrow Shot" -> { damage = 25; manaCost = 0; }
+            case "Fire Arrow" -> { damage = 30; manaCost = 15; }
+            case "Double Shot" -> { damage = 35; manaCost = 0; }
+            case "Ice Arrow" -> { damage = 40; manaCost = 20; }
+            case "Rain of Arrows" -> { damage = 45; manaCost = 0; }
+            case "Explosive Arrow" -> { damage = 50; manaCost = 25; }
+            default -> { damage = 10; manaCost = 3; }
+        }
+        this.attack(skill, damage, manaCost, enemies);
     }
 }

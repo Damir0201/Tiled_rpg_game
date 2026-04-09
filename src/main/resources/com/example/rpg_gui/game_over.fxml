@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.gameOverController">
+   <children>
+      <Label layoutX="56.0" layoutY="36.0" text="GAME OVER" textAlignment="CENTER" textFill="#8c0871">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <font>
+            <Font name="Consolas Bold" size="70.0" />
+         </font>
+      </Label>
+      <Button fx:id="restartButton" layoutX="209.0" layoutY="184.0" mnemonicParsing="false" onAction="#handleRestart" style="-fx-background-color: #8c0871;" text="RESTART" textAlignment="CENTER" textFill="#ecb7e2">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </Button>
+   </children>
+</AnchorPane>

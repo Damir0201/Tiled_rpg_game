@@ -5,32 +5,25 @@ public class Mage extends Hero {
         super("Mage", HeroType.Mage);
 
         this.maxMana = (int) (this.maxMana * 1.2);
-        this.health = this.maxHealth;
+        this.mana = this.maxMana;
 
-        //this.attackDistance = 3;
+        this.attackDistance = 2;
     }
 
-    public void windAttack(Enemy... enemies) {
-        attack("Wind Attack", 15, 5, enemies);
-    }
-
-    public void fireball(Enemy... enemies) {
-        attack("Fireball", 40, 7, enemies);
-    }
-
-    public void IceShot(Enemy... enemies) {
-        attack("Ice Shot", 25, 9, enemies);
-    }
-
-    public void Meteor(Enemy... enemies) {
-        attack("Meteor", 30, 11, enemies);
-    }
-
-    public void fireStorm(Enemy... enemies) {
-        attack("Fire Storm", 35, 13, enemies);
-    }
-
-    public void curse(Enemy... enemies) {
-        attack("Curse", 40, 15, enemies);
+    @Override
+    public void useSelectedAttack(Enemy... enemies) {
+        String skill = getSelectedAttackName();
+        int damage = 0;
+        int manaCost = 0;
+        switch (skill) {
+            case "Wind Attack" -> { damage = 25; manaCost = 5; }
+            case "Fireball" -> { damage = 30; manaCost = 7; }
+            case "Ice Shot" -> { damage = 35; manaCost = 7; }
+            case "Meteor" -> { damage = 40; manaCost = 9; }
+            case "Fire Storm" -> { damage = 45; manaCost = 10; }
+            case "Curse" -> { damage = 50; manaCost = 11; }
+            default -> { damage = 10; manaCost = 3; }
+        }
+        this.attack(skill, damage, manaCost, enemies);
     }
 }

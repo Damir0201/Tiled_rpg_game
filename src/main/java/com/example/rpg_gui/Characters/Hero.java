@@ -1,6 +1,6 @@
 package com.example.rpg_gui.Characters;
 
-import com.example.rpg_gui.Systems.Inventory;
+import com.example.rpg_gui.Systems.inventorySystem;
 import com.example.rpg_gui.Items.*;
 
 import java.util.ArrayList;
@@ -18,12 +18,28 @@ public class Hero extends Character {
     protected int exp;
     protected int maxExp = 100; //exp to next level
     protected int attackDistance;
+    protected int currentAttackIndex = 0;
     protected ArrayList<String> learnedAttacks = new ArrayList<String>();
-    protected Inventory inventory = new Inventory();
+    protected inventorySystem inventorySystem = new inventorySystem();
 
     public HeroType getHero () {return type;}
     public int getMoney () {return money;}
     public int getAttackDistance() {return attackDistance;}
+    public inventorySystem getInventory() {return this.inventorySystem;}
+    public int getLevel() {
+        return level;
+    }
+    public int getMana() {
+        return mana;
+    }
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
+    public int getMaxMana() {
+        return this.maxMana;
+    }
+    public Armor getEquippedArmor() {return equippedArmor;}
+    public Weapon getEquippedWeapon() {return equippedWeapon;}
 
 
     public void gainExp (int amount) {
@@ -35,9 +51,7 @@ public class Hero extends Character {
         }
     }
 
-    public int getMana() {
-        return mana;
-    }
+
     public void levelUp() {
         level++;
         maxHealth += 10;
@@ -48,9 +62,8 @@ public class Hero extends Character {
         System.out.println("Level up to " + level);
         System.out.println("Go to the Academy to learn new spells");
     }
-    public int getLevel() {
-        return level;
-    }
+
+
     public void learnAttack (String attackName, int allowedLevel) {
         if (this.level < allowedLevel) {
             System.out.println("Your need level " + allowedLevel + " to learn " + attackName);
@@ -62,28 +75,10 @@ public class Hero extends Character {
     }
 
 
-    public void showAttackList() {
-        System.out.println("Your skills: ");
-        if (learnedAttacks.isEmpty()) {
-            System.out.println("You have not learned any attacks yet. Go to the Academy");
-            return;
-        }
-        for (String attack: learnedAttacks) {
-            System.out.println("- " + attack);
-        }
-    }
-    public int getMaxHealth() {
-        return this.maxHealth;
-    }
-    public int getMaxMana() {
-        return this.maxMana;
-    }
-
-
     public void setEquippedArmor (Armor armor) {
         if (armor == null) return;
         if (this.equippedArmor != null) {
-            inventory.addItem(this.equippedArmor);
+            inventorySystem.addItem(this.equippedArmor);
         }
         this.equippedArmor = armor;
         System.out.println("Armor equipped: " + armor.getItemName());
@@ -93,24 +88,22 @@ public class Hero extends Character {
     public void setEquippedWeapon (Weapon weapon) {
         if(weapon==null) return;
         if(this.equippedWeapon!=null) {
-            inventory.addItem(this.equippedWeapon);
+            inventorySystem.addItem(this.equippedWeapon);
         }
         this.equippedWeapon = weapon;
         System.out.println("Weapon equipped: " + weapon.getItemName());
     }
 
+
     public Hero (String name, HeroType type) {
         super (name);
         this.type = type;
-        this.mana = maxMana;
         this.money = 100;
         this.level = 1;
         this.exp = 0;
-        if (type == HeroType.Warrior) {
-            this.attackDistance = 1;
-        } else {
-            this.attackDistance = 3;
-        }
+
+        this.health = this.maxHealth;
+        this.mana = this.maxMana;
     }
 
 
@@ -119,17 +112,18 @@ public class Hero extends Character {
         System.out.println("You received " + amount + " coins");
         System.out.println(("Your total balance: "+money));
     }
+
     public void spendMoney (int amount) {
         money -= amount;
         System.out.println("You spent " + amount + " coins");
         System.out.println("Your total money: " + money);
     }
+
+
     public void addItem (Item item) {
-        inventory.addItem(item);
+        inventorySystem.addItem(item);
     }
-    public void openInventory (){
-        inventory.open(this);
-    }
+
 
     public void attack (String attackName, int damage, int manaNeed, Enemy... enemies) {
         if (!this.isAlive() || enemies == null || enemies.length == 0) return;
@@ -153,24 +147,6 @@ public class Hero extends Character {
             enemy.takeDamage(finalDamage);
             this.checkEnemyDeath(enemy);
         }
-    }
-    public void restoreHealth (int amount) {
-        this.health += amount;
-        if (this.health > maxHealth) {
-            this.health = maxHealth;
-        }
-        System.out.println("You restored +" + amount + " health!");
-        System.out.println("Your total health " + this.health + "/" + maxHealth);
-    }
-
-
-    public void restoreMana (int amount) {
-        this.mana += amount;
-        if (this.mana > maxMana) {
-            this.mana = maxMana;
-        }
-        System.out.println("You restored +" + amount + " mana!");
-        System.out.println("Your total mana " + this.mana + "/" + maxMana);
     }
 
 
@@ -210,17 +186,40 @@ public class Hero extends Character {
         }
     }
 
-    public void showStatus() {
-        System.out.println("\t" + getHero());
-        System.out.println("\tHealth:\t\t" + health + "/" + maxHealth);
-        System.out.println("\tMana:\t\t" + mana + "/" + maxMana);
-        System.out.println("\tMoney:\t\t" + money);
-        System.out.println("\tLevel:\t\t" + level);
-        System.out.println("\tExp:\t\t" + exp + "/" + maxExp);
-        System.out.println("\tWeapon:\t\t" + (equippedWeapon != null ? equippedWeapon.getItemName() : "None"));
-        System.out.println("\tArmor:\t\t" + (equippedArmor != null ? equippedArmor.getItemName() : "None"));
+
+    public void useSelectedAttack(Enemy... enemies) {
     }
-    public Inventory getInventory() {
-        return this.inventory; // Проверь, чтобы поле называлось именно inventory
+
+    public void switchAttack() {
+        if (learnedAttacks.isEmpty()) {
+            System.out.println("No skills learned yet!");
+            return;
+        }
+        currentAttackIndex = (currentAttackIndex + 1) % learnedAttacks.size();
+        System.out.println("Selected skill: " + getSelectedAttackName());
+    }
+
+    public String getSelectedAttackName() {
+        if (learnedAttacks.isEmpty()) return "None";
+        return learnedAttacks.get(currentAttackIndex);
+    }
+
+
+    public void restoreHealth (int amount) {
+        this.health += amount;
+        if (this.health > maxHealth) {
+            this.health = maxHealth;
+        }
+        System.out.println("You restored +" + amount + " health!");
+        System.out.println("Your total health " + this.health + "/" + maxHealth);
+    }
+
+    public void restoreMana (int amount) {
+        this.mana += amount;
+        if (this.mana > maxMana) {
+            this.mana = maxMana;
+        }
+        System.out.println("You restored +" + amount + " mana!");
+        System.out.println("Your total mana " + this.mana + "/" + maxMana);
     }
 }
