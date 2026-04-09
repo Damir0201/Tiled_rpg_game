@@ -98,11 +98,12 @@ public class Hero extends Character {
     public Hero (String name, HeroType type) {
         super (name);
         this.type = type;
-        this.mana = maxMana;
-        this.health = maxHealth;
         this.money = 100;
         this.level = 1;
         this.exp = 0;
+
+        this.health = this.maxHealth;
+        this.mana = this.maxMana;
     }
 
 

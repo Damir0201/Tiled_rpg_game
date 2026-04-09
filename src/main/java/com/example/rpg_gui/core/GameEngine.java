@@ -65,12 +65,13 @@ public class GameEngine {
         portalPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Portal.png"))));
     }
 
-    public void initGame() {
+    public void initGame(Hero chosenHero, String skinFileName) {
         this.hubMap = new Map(10, 15, new HubGenerator());
         this.dungeonMap = new Map(20, 25, new DungeonGenerator());
         this.map = hubMap;
-        this.myHero = new Warrior();
-        //this.myHero.learnAttack("Slash", 1);
+        this.myHero = chosenHero;
+        this.heroPattern = new ImagePattern(new Image(Objects.requireNonNull(
+                getClass().getResourceAsStream("/com/example/rpg_gui/images/" + skinFileName))));
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
         academySystem.teachSkills(myHero);

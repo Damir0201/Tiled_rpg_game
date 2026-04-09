@@ -6,7 +6,7 @@ public class Mage extends Hero {
 
         this.maxMana = (int) (this.maxMana * 1.2);
         this.mana = this.maxMana;
-        this.health = this.maxHealth;
+
         this.attackDistance = 2;
     }
 

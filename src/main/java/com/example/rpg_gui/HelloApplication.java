@@ -2,28 +2,20 @@ package com.example.rpg_gui;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.example.rpg_gui.core.GameEngine;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
-    public void start(Stage stage) {
-        // VBox для вертикальной верстки
-        VBox mainLayout = new VBox();
-        Pane gamePane = new Pane();
-        Pane uiPane = new Pane();
-        mainLayout.getChildren().addAll(gamePane, uiPane);
-        GameEngine gameEngine = new GameEngine(gamePane, uiPane);
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main_menu.fxml"));
 
-        gameEngine.initGame();
+        Scene scene = new Scene(fxmlLoader.load(), 800, 740);
 
-        Scene scene = new Scene(mainLayout, 800, 740);
-        scene.setOnKeyPressed(event -> gameEngine.handleInput(event.getCode()));
-
-        stage.setTitle("RPG Game");
+        stage.setTitle("RPG Game - Menu");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 }

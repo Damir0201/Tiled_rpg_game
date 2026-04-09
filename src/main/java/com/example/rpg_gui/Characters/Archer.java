@@ -4,6 +4,7 @@ public class Archer extends Hero{
 
     public Archer() {
         super("Archer", HeroType.Archer);
+
         this.attackDistance = 3;
     }
 
