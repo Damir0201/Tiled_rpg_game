@@ -1,8 +1,8 @@
 package com.example.rpg_gui.Characters;
 
 public class Mage extends Hero {
-    public Mage() {
-        super("Mage", HeroType.Mage);
+    public Mage(String name) {
+        super(name, HeroType.Mage);
 
         this.maxMana = (int) (this.maxMana * 1.2);
         this.mana = this.maxMana;

@@ -2,8 +2,8 @@ package com.example.rpg_gui.Characters;
 
 public class Warrior extends Hero {
 
-    public Warrior() {
-        super("Warrior", HeroType.Warrior);
+    public Warrior(String name) {
+        super(name, HeroType.Warrior);
 
         this.maxHealth = (int)(this.maxHealth *1.2);
         this.health = maxHealth;

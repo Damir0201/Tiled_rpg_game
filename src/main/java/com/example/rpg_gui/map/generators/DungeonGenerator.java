@@ -79,12 +79,12 @@ public class DungeonGenerator implements MapGenerator{
                         tiles[y][x] = new Tile(TypeTile.Wall);
                     }
                 } else {
-                    tiles[y][x] = new Tile(TypeTile.Floor);
+                    tiles[y][x] = new Tile(TypeTile.Grass);
                 }
             }
         }
         Enemy boss = Enemy.BossA;
-        boss.setPosition(new Position(startX + 1, startY + 1));
+        boss.setInitialPosition(startX+1,startY+1);
         enemies.add(boss);
     }
     public void spawnEnemies(Random random,Tile[][] tiles, int width, int height, List <Enemy> enemies) {
@@ -96,7 +96,7 @@ public class DungeonGenerator implements MapGenerator{
                 y = random.nextInt(height);
                 x = random.nextInt(width);
             } while (tiles[y][x].getType() != TypeTile.Floor);
-            name.setPosition(new Position(x, y));
+            name.setInitialPosition(x, y);
             enemies.add(name);
         }
     }

@@ -69,8 +69,7 @@ public class GameEngine {
         this.hubMap = new Map(10, 15, new HubGenerator());
         this.dungeonMap = new Map(20, 25, new DungeonGenerator());
         this.map = hubMap;
-        this.myHero = new Archer();
-        //this.myHero.learnAttack("Slash", 1);
+        this.myHero = new Archer("Damira");
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
         academySystem.teachSkills(myHero);
@@ -80,11 +79,11 @@ public class GameEngine {
     public void switchMap() {
         if (this.map == hubMap) {
             this.map = dungeonMap;
-            myHero.setPosition(new Position(1, 1)); // Точка входа в данж
+            myHero.setPosition(new Position(1, 1));
             System.out.println("you entered to dungeon");
         } else {
             this.map = hubMap;
-            myHero.setPosition(new Position(1, 1)); // Возвращаемся к двери в Хабе
+            myHero.setPosition(new Position(1, 1));
             System.out.println("you returned to hub");
         }
     }
@@ -111,7 +110,6 @@ public class GameEngine {
     }
     public void renderWorld() {
 
-        // 1. РИСУЕМ КАРТУ
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
                 Rectangle rect = new Rectangle(x * Tile_Size, y * Tile_Size, Tile_Size, Tile_Size);
@@ -133,6 +131,7 @@ public class GameEngine {
         }
         for (var enemy : map.getEnemies()) {
             if (enemy.isAlive()) {
+                enemy.chasingPlayer(myHero.getPosition(),myHero, map);
                 Rectangle enemyRect = new Rectangle(enemy.getPosition().getMyX() * Tile_Size, enemy.getPosition().getMyY() * Tile_Size, Tile_Size, Tile_Size);
                 enemyRect.setFill(orcPattern);
                 root.getChildren().add(enemyRect);
