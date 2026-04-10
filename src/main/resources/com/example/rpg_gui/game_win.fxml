@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="CONTROLLER_NAME">
+<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.gameWinController">
    <children>
       <Label layoutX="105.0" layoutY="33.0" text="VICTORY" textFill="#8c0871">
          <font>

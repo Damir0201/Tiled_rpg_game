@@ -1,10 +1,8 @@
 package com.example.rpg_gui.core;
 
 import com.example.rpg_gui.Characters.Hero;
-import com.example.rpg_gui.Systems.shopController;
-import com.example.rpg_gui.Systems.shopSystem;
+import com.example.rpg_gui.Systems.*;
 import com.example.rpg_gui.map.Map;
-import com.example.rpg_gui.Systems.inventoryController;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -31,7 +29,7 @@ public class UImanager {
 
     private boolean uiInitialized = false;
 
-    public void drawHUD(Pane root, Hero hero, Map map, double sceneWidth) {
+    public void drawHUD(Pane root, Hero hero, Map map, int sceneWidth) {
         if (!uiInitialized) {
             setupUI();
 
@@ -61,8 +59,7 @@ public class UImanager {
         healthText.setText("Health: " + hero.getHealth() + " / " + hero.getMaxHealth());
         manaText.setText("Mana: " + hero.getMana() + " / " + hero.getMaxMana());
 
-        var aliveCount = map.getEnemies().stream().filter(enemy -> enemy.isAlive()).count();
-        enemyCount.setText("Enemies: " + aliveCount);
+        enemyCount.setText("Enemies: " + map.aliveEnemies());
 
         double healthPercent = Math.max(0, (double) hero.getHealth() / hero.getMaxHealth());
         double manaPercent = Math.max(0, (double) hero.getMana() / hero.getMaxMana());
@@ -78,15 +75,13 @@ public class UImanager {
         enemyCount.setX(15);
         enemyCount.setY(90);
 
-        double rightPadding = 15;
-        double weaponX = sceneWidth - 300;
-        double armorX = weaponX;
+        int x = sceneWidth - 300;
 
-        equippedWeaponText.setX(weaponX);
+        equippedWeaponText.setX(x);
         equippedWeaponText.setY(30);
         equippedWeaponText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
-        equippedArmorText.setX(armorX);
+        equippedArmorText.setX(x);
         equippedArmorText.setY(60);
         equippedArmorText.setFont(Font.font("Arial", FontWeight.BOLD, 14));
 
@@ -170,6 +165,40 @@ public class UImanager {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error: cannot find shop.fxml!");
+        }
+    }
+
+    public void showGameOver(GameState state, Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/game_over.fxml"));
+            Parent root = loader.load();
+            gameOverController controller = loader.getController();
+            controller.setMainStage(primaryStage);
+            Stage stage = new Stage();
+            stage.setTitle("Game Over");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(primaryStage);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showVictory(GameState state, Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/game_win.fxml"));
+            Parent root = loader.load();
+            gameWinController controller = loader.getController();
+            controller.setMainStage(primaryStage);
+            Stage stage = new Stage();
+            stage.setTitle("Victory!");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(primaryStage);
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
