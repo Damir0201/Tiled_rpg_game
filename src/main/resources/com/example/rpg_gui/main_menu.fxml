@@ -12,12 +12,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.menuController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <children>
-      <VBox layoutX="300.0" layoutY="170.0" prefHeight="740.0" prefWidth="800.0" style="-fx-background-color: Pink;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="300.0" layoutY="170.0" prefHeight="740.0" prefWidth="800.0" style="-fx-background-color: Pink;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" prefHeight="38.0" prefWidth="287.0" text="Choose a hero:" textAlignment="CENTER" textFill="#8c0871">
                <VBox.margin>
@@ -112,7 +112,7 @@
                   <Insets left="200.0" right="200.0" />
                </VBox.margin>
             </HBox>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="56.0" prefWidth="343.0" style="-fx-background-color: #8c0871;" text="START GAME" textAlignment="CENTER" textFill="#f2b4de">
+            <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleStartGame" prefHeight="56.0" prefWidth="343.0" style="-fx-background-color: #8c0871;" text="START GAME" textAlignment="CENTER" textFill="#f2b4de">
                <font>
                   <Font name="Consolas Bold Italic" size="30.0" />
                </font>

@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.stage.Stage;
 
 public class GameEngine {
     private Pane root;
@@ -27,6 +28,7 @@ public class GameEngine {
     private Map dungeonMap;
     private Hero myHero;
     private final int Tile_Size = 32;
+    private GameState gameState = new GameState();
 
     private UImanager uImanager = new UImanager();
     private ImagePattern grassPattern;
@@ -65,11 +67,13 @@ public class GameEngine {
         portalPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Portal.png"))));
     }
 
-    public void initGame() {
+    public void initGame(Hero chosenHero, String skinFileName) {
         this.hubMap = new Map(10, 15, new HubGenerator());
         this.dungeonMap = new Map(20, 25, new DungeonGenerator());
         this.map = hubMap;
-        this.myHero = new Archer("Damira");
+        this.myHero = chosenHero;
+        this.heroPattern = new ImagePattern(new Image(Objects.requireNonNull(
+                getClass().getResourceAsStream("/com/example/rpg_gui/images/" + skinFileName))));
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
         academySystem.teachSkills(myHero);
@@ -89,6 +93,7 @@ public class GameEngine {
     }
 
     public void handleInput(KeyCode code) {
+        if (gameState.getCurrentState() != GameState.State.PLAYING) return;
         switch (code) {
             case W -> movementSystem.move(myHero.getPosition(), map, 0, -1);
             case S -> movementSystem.move(myHero.getPosition(), map, 0, 1);
@@ -103,13 +108,18 @@ public class GameEngine {
     }
 
     public void render(){
+        if (root.getScene() == null) {
+            return;
+        }
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+
+        gameState.update(myHero, map, dungeonMap, uImanager, primaryStage);
         root.getChildren().clear();
         renderWorld();
-        uiPane.getChildren().clear();
-        uImanager.drawHUD(uiPane, myHero, map);
+        uImanager.drawHUD(uiPane, myHero, map, 800);
     }
-    public void renderWorld() {
 
+    public void renderWorld() {
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
                 Rectangle rect = new Rectangle(x * Tile_Size, y * Tile_Size, Tile_Size, Tile_Size);

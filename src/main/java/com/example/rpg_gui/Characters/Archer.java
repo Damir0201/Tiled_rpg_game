@@ -2,8 +2,9 @@ package com.example.rpg_gui.Characters;
 
 public class Archer extends Hero{
 
-    public Archer(String name) {
-        super(name, HeroType.Archer);
+    public Archer() {
+        super("Archer", HeroType.Archer);
+
         this.attackDistance = 3;
     }
 
