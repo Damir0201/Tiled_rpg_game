@@ -18,6 +18,7 @@ import java.util.Objects;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.stage.Stage;
 
 public class GameEngine {
     private Pane root;
@@ -27,6 +28,7 @@ public class GameEngine {
     private Map dungeonMap;
     private Hero myHero;
     private final int Tile_Size = 32;
+    private GameState gameState = new GameState();
 
     private UImanager uImanager = new UImanager();
     private ImagePattern grassPattern;
@@ -91,6 +93,7 @@ public class GameEngine {
     }
 
     public void handleInput(KeyCode code) {
+        if (gameState.getCurrentState() != GameState.State.PLAYING) return;
         switch (code) {
             case W -> movementSystem.move(myHero.getPosition(), map, 0, -1);
             case S -> movementSystem.move(myHero.getPosition(), map, 0, 1);
@@ -105,8 +108,13 @@ public class GameEngine {
     }
 
     public void render(){
+        if (root.getScene() == null) {
+            return;
+        }
+        Stage primaryStage = (Stage) root.getScene().getWindow();
+
+        gameState.update(myHero, map, dungeonMap, uImanager, primaryStage);
         root.getChildren().clear();
-        //uiPane.getChildren().clear();
         renderWorld();
         uImanager.drawHUD(uiPane, myHero, map, 800);
     }

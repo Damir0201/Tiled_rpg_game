@@ -4,6 +4,7 @@ import com.example.rpg_gui.Characters.*;
 import com.example.rpg_gui.core.GameEngine;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class menuController {
+    @FXML private Button startButton;
     @FXML private ToggleGroup heroGroup;
     @FXML private ToggleGroup skinGroup;
     @FXML private ToggleGroup modeGroup;
@@ -40,17 +42,15 @@ public class menuController {
         Pane uiPane = new Pane();
         mainLayout.getChildren().addAll(gamePane, uiPane);
 
+        Stage stage = (Stage) startButton.getScene().getWindow();
+        Scene gameScene = new Scene(mainLayout, 800, 740);
+        stage.setScene(gameScene);
 
         GameEngine gameEngine = new GameEngine(gamePane, uiPane);
         gameEngine.initGame(player, skinFile);
 
-        Stage stage = (Stage) ((javafx.scene.Node) skinGroup.getToggles().get(0)).getScene().getWindow();
-        Scene gameScene = new Scene(mainLayout, 800, 740);
-
-
         gameScene.setOnKeyPressed(event -> gameEngine.handleInput(event.getCode()));
 
-        stage.setScene(gameScene);
         stage.setTitle("RPG Game - Active Session");
     }
 }

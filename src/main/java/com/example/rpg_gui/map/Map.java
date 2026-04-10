@@ -32,6 +32,8 @@ public class Map {
     public List<Enemy> getEnemies() {
         return enemies;
     }
+    public int aliveEnemies () { return getEnemies().stream()
+            .filter(e -> e.isAlive()).toList().size();};
 
     public void printMap(Position playerPos) {
         for (int y = 0; y < height; y++) {
