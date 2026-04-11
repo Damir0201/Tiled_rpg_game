@@ -45,7 +45,7 @@ public class DungeonGenerator implements MapGenerator{
                             tiles[y][x] = new Chest(100, bossKey);
                             keyPlaced = true;
                         } else {
-                            int randomMoney = rand.nextInt(41) + 10;
+                            int randomMoney = rand.nextInt(21) + 10;
                             tiles[y][x] = new Chest(randomMoney);
                         }
                     }
