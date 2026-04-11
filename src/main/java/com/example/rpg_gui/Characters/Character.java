@@ -17,10 +17,7 @@ public abstract class Character implements MovementForAll {
         this.position.setMyY(newY);
     }
 
-    @Override
-    public Position getCurrentPosition() {
-        return this.position;
-    }
+
     public boolean isAlive() {
         return health >0;
     }

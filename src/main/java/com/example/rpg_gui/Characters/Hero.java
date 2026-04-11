@@ -6,7 +6,6 @@ import com.example.rpg_gui.Items.*;
 import java.util.ArrayList;
 
 public class Hero extends Character {
-    //add a bag
     public enum HeroType {Warrior, Mage, Archer}
     private final HeroType type;
     protected Armor equippedArmor;

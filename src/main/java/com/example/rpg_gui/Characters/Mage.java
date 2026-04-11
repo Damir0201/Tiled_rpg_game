@@ -1,8 +1,8 @@
 package com.example.rpg_gui.Characters;
 
 public class Mage extends Hero {
-    public Mage(String name) {
-        super(name, HeroType.Mage);
+    public Mage() {
+        super("Mage", HeroType.Archer);
 
         this.maxMana = (int) (this.maxMana * 1.2);
         this.mana = this.maxMana;
@@ -13,8 +13,8 @@ public class Mage extends Hero {
     @Override
     public void useSelectedAttack(Enemy... enemies) {
         String skill = getSelectedAttackName();
-        int damage = 0;
-        int manaCost = 0;
+        int damage;
+        int manaCost;
         switch (skill) {
             case "Wind Attack" -> { damage = 25; manaCost = 5; }
             case "Fireball" -> { damage = 30; manaCost = 7; }

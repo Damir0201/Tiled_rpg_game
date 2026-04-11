@@ -3,7 +3,7 @@ package com.example.rpg_gui.Items;
 import com.example.rpg_gui.Characters.Hero;
 
 public class Armor extends Item {
-    private int defenceBonus;
+    private final int defenceBonus;
 
     public int getDefenceBonus() {
         return defenceBonus;

@@ -1,11 +1,10 @@
 package com.example.rpg_gui.map;
 import com.example.rpg_gui.Characters.Enemy;
-import com.example.rpg_gui.Items.Key;
+import com.example.rpg_gui.map.generators.Difficulty;
 import com.example.rpg_gui.map.generators.MapGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Map {
     private final int height;
@@ -13,11 +12,11 @@ public class Map {
     private final Tile[][] tiles;
     private final List<Enemy> enemies = new ArrayList<>();
 
-    public Map(int height, int width, MapGenerator generator) {
+    public Map(int height, int width, MapGenerator generator, Difficulty diff) {
         this.height=height;
         this.width=width;
         tiles = new Tile[height][width];
-        generator.generate(this.tiles, this.width, this.height, this.enemies);
+        generator.generate(this.tiles, this.width, this.height, this.enemies, diff);
     }
 
     public Tile[][] getTiles() {
@@ -32,8 +31,9 @@ public class Map {
     public List<Enemy> getEnemies() {
         return enemies;
     }
-    public int aliveEnemies () { return getEnemies().stream()
-            .filter(e -> e.isAlive()).toList().size();};
+    public int aliveEnemies () {
+        return getEnemies().stream().filter(e -> e.isAlive()).toList().size();
+    }
 
     public void printMap(Position playerPos) {
         for (int y = 0; y < height; y++) {

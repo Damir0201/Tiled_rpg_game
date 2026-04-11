@@ -6,9 +6,9 @@ import com.example.rpg_gui.map.Position;
 public class Enemy extends Character {
     public enum enemyType {DungeonBoss, Monster}
     private final enemyType typeOfEnemy;
-    private int attackPower;
-    private int detectionRange;
-    private int disableChasingRange;
+    private final int attackPower;
+    private final int detectionRange;
+    private final int disableChasingRange;
     private Position spawnPosition;
 
     public enemyType getEnemyType() {
@@ -50,6 +50,9 @@ public class Enemy extends Character {
             System.out.println(this.name + " took " + damage + " damage!");
             System.out.println(this.name + " health: " + this.health);
         }
+    }
+    public void restore() {
+        this.health = this.maxHealth;
     }
     public void chasingPlayer(Position hpos, Hero hero, Map currentMap) {
         if(!this.isAlive()) return;
