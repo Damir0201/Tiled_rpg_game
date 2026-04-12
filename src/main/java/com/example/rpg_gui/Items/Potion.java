@@ -17,9 +17,7 @@ public class Potion extends Item{
     public potionType getPotionType () {
         return typeOfPotion;
     }
-    public int getRestoreAmount () {
-        return restoreAmount;
-    }
+
     @Override
     public void use (Hero hero){
         System.out.println("You used " + getItemName());
@@ -40,8 +38,8 @@ public class Potion extends Item{
     }
 
 
-    public static final Potion sHealthPotion = new Potion ("Small Health Potion", 10, potionType.Health, 50);
-    public static final Potion lHealthPotion = new Potion ("Large Health Potion", 20, potionType.Health, 100);
-    public static final Potion sManaPotion = new Potion ("Small Mana Potion", 10, potionType.Mana, 50);
-    public static final Potion lManaPotion = new Potion ("Large Mana Potion", 20, potionType.Mana, 100);
+    public static final Potion sHealthPotion = new Potion ("Small Health Potion", 30, potionType.Health, 50);
+    public static final Potion lHealthPotion = new Potion ("Large Health Potion", 70, potionType.Health, 100);
+    public static final Potion sManaPotion = new Potion ("Small Mana Potion", 30, potionType.Mana, 50);
+    public static final Potion lManaPotion = new Potion ("Large Mana Potion", 70, potionType.Mana, 100);
 }

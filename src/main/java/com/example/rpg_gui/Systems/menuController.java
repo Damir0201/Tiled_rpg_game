@@ -35,6 +35,12 @@ public class menuController {
         ToggleButton selectedModeBtn = (ToggleButton) modeGroup.getSelectedToggle();
         String difficulty = (selectedModeBtn != null) ? selectedModeBtn.getText() : "Normal";
 
+        com.example.rpg_gui.map.generators.Difficulty selectedDifficulty = switch (difficulty) {
+            case "Easy" -> com.example.rpg_gui.map.generators.Difficulty.EASY;
+            case "Hard" -> com.example.rpg_gui.map.generators.Difficulty.HARD;
+            default -> com.example.rpg_gui.map.generators.Difficulty.NORMAL;
+        };
+
         System.out.println("Starting game with: " + heroType + ", Skin: " + skinName + ", Mode: " + difficulty);
 
         VBox mainLayout = new VBox();
@@ -47,7 +53,7 @@ public class menuController {
         stage.setScene(gameScene);
 
         GameEngine gameEngine = new GameEngine(gamePane, uiPane);
-        gameEngine.initGame(player, skinFile);
+        gameEngine.initGame(player, skinFile, selectedDifficulty);
 
         gameScene.setOnKeyPressed(event -> gameEngine.handleInput(event.getCode()));
 

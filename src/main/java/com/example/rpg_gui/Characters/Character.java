@@ -1,7 +1,7 @@
 package com.example.rpg_gui.Characters;
 import com.example.rpg_gui.map.Position;
 
-public abstract class Character {
+public abstract class Character implements MovementForAll {
     protected String name;
     protected int health;
     protected int maxHealth=100;
@@ -11,6 +11,12 @@ public abstract class Character {
         this.name = name;
         this.health = maxHealth;
     }
+    @Override
+    public void moveTo(int newX, int newY) {
+        this.position.setMyX(newX);
+        this.position.setMyY(newY);
+    }
+
 
     public boolean isAlive() {
         return health >0;

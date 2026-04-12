@@ -3,7 +3,7 @@ package com.example.rpg_gui.Items;
 import com.example.rpg_gui.Characters.Hero;
 
 public class Armor extends Item {
-    private int defenceBonus;
+    private final int defenceBonus;
 
     public int getDefenceBonus() {
         return defenceBonus;
@@ -24,7 +24,7 @@ public class Armor extends Item {
     public Item copy() {
         return new Armor(getItemName(), getItemPrice(), defenceBonus);
     }
-    public static final Armor leatherArmor = new Armor ("Leather Armor", 30, 5);
-    public static final Armor ironArmor = new Armor ("Iron Armor", 90, 10);
-    public static final Armor stealArmor = new Armor ("Steal Armor", 150, 20);
+    public static final Armor leatherArmor = new Armor ("Leather Armor", 50, 5);
+    public static final Armor ironArmor = new Armor ("Iron Armor", 120, 10);
+    public static final Armor stealArmor = new Armor ("Steal Armor", 200, 20);
 }

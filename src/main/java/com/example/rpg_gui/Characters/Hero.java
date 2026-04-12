@@ -6,7 +6,6 @@ import com.example.rpg_gui.Items.*;
 import java.util.ArrayList;
 
 public class Hero extends Character {
-    //add a bag
     public enum HeroType {Warrior, Mage, Archer}
     private final HeroType type;
     protected Armor equippedArmor;
@@ -157,7 +156,7 @@ public class Hero extends Character {
                 this.earnMoney(200);
             } else {
                 this.gainExp(50);
-                this.earnMoney(50);
+                this.earnMoney(20);
                 this.health = Math.min (health +50, maxHealth);
                 this.mana = Math.min (mana +50, maxMana);
             }

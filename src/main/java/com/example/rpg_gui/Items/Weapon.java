@@ -32,13 +32,13 @@ public class Weapon extends Item {
     public Item copy() {
         return new Weapon(getItemName(), getItemPrice(), allowedHero, bonusDamage);
     }
-    public static final Weapon woodenSword = new Weapon ("Wooden Sword", 15, Warrior, 2);
-    public static final Weapon woodenBow = new Weapon ("Wooden Bow", 15, Archer, 2);
-    public static final Weapon woodenStaff = new Weapon ("Wooden Staff", 15, Mage, 2);
-    public static final Weapon ironSword = new Weapon ("Iron Sword", 70, Warrior, 10);
-    public static final Weapon ironBow = new Weapon ("Iron Bow", 70, Archer, 10);
-    public static final Weapon ironStaff = new Weapon ("Iron Staff", 70, Mage, 10);
-    public static final Weapon goldSword = new Weapon ("Gold Sword", 120, Warrior, 20);
-    public static final Weapon goldBow = new Weapon ("Gold Bow", 120, Archer, 20);
-    public static final Weapon goldStaff = new Weapon ("Gold Staff", 120, Mage, 20);
+    public static final Weapon woodenSword = new Weapon ("Wooden Sword", 40, Warrior, 2);
+    public static final Weapon woodenBow = new Weapon ("Wooden Bow", 40, Archer, 2);
+    public static final Weapon woodenStaff = new Weapon ("Wooden Staff", 40, Mage, 2);
+    public static final Weapon ironSword = new Weapon ("Iron Sword", 90, Warrior, 10);
+    public static final Weapon ironBow = new Weapon ("Iron Bow", 90, Archer, 10);
+    public static final Weapon ironStaff = new Weapon ("Iron Staff", 90, Mage, 10);
+    public static final Weapon goldSword = new Weapon ("Gold Sword", 150, Warrior, 20);
+    public static final Weapon goldBow = new Weapon ("Gold Bow", 150, Archer, 20);
+    public static final Weapon goldStaff = new Weapon ("Gold Staff", 150, Mage, 20);
 }

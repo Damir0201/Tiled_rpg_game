@@ -14,8 +14,8 @@ public class Warrior extends Hero {
     @Override
     public void useSelectedAttack(Enemy... enemies) {
         String skill = getSelectedAttackName();
-        int damage = 0;
-        int manaCost = 0;
+        int damage;
+        int manaCost;
         switch (skill) {
             case "Slash" -> { damage = 25; manaCost = 0; }
             case "Fire Sword" -> { damage = 30; manaCost = 15; }
