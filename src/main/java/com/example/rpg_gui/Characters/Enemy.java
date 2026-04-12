@@ -93,7 +93,7 @@ public class Enemy extends Character {
             else if (enemyPosY>targetY) nextY--;
         }
         if (nextX == heroPosX && nextY == heroPosY) {
-            this.enemyAttack(hero);
+            System.out.println("enemy is close to you");
         } else if (currentMap.possibleMove(nextX, nextY)) {
             this.moveTo(nextX, nextY);
         }
