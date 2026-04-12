@@ -9,7 +9,7 @@ import java.util.List;
 public class HubGenerator implements MapGenerator{
 
     @Override
-    public void generate(Tile[][] tiles, int width, int height, List<Enemy> enemies) {
+    public void generate(Tile[][] tiles, int width, int height, List<Enemy> enemies, Difficulty diff) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (y == 0 || y == height - 1 || x == 0 || x == width - 1) {

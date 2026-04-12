@@ -7,9 +7,9 @@ import com.example.rpg_gui.core.UImanager;
 import com.example.rpg_gui.map.*;
 
 public class interactionSystem {
+
     public static void interact(Hero hero, Map map, GameEngine engine, UImanager uImanager) {
         Position p = hero.getPosition();
-
         TypeTile type = map.getTiles()[p.getMyY()][p.getMyX()].getType();
         if (type == TypeTile.PortalTile) {
             engine.switchMap();
@@ -27,11 +27,9 @@ public class interactionSystem {
 
                 if (currentTile instanceof Chest) {
                     Chest chest = (Chest) currentTile;
-
                     if (!chest.isOpened()) {
                         int money = chest.openChest();
                         hero.earnMoney(money);
-
                         currentTile.setType(TypeTile.Floor);
                     }
                     Item item = chest.getContainedItem();
