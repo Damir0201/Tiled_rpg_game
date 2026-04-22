@@ -65,7 +65,7 @@ public class DungeonGenerator implements MapGenerator{
     public void roomLocator(Tile[][] tiles, int width, int height, List <Enemy> enemies, Enemy boss) {
         Random rand = new Random();
         int startY, startX;
-        int size = 4;
+        int size = 5;
 
         do{
             startX= rand.nextInt(width-size-2)+1;
@@ -81,12 +81,12 @@ public class DungeonGenerator implements MapGenerator{
                         tiles[y][x] = new Tile(TypeTile.Wall);
                     }
                 } else {
-                    tiles[y][x] = new Tile(TypeTile.Grass);
+                    tiles[y][x] = new Tile(TypeTile.BossRoomFloor);
                 }
             }
         }
         boss.restore();
-        boss.setInitialPosition(startX+1,startY+1);
+        boss.setInitialPosition(startX+2,startY+2);
         enemies.add(boss);
     }
     public void spawnEnemies(Random random,Tile[][] tiles, int width, int height, List <Enemy> enemies, int limit) {

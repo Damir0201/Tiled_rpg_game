@@ -45,6 +45,7 @@ public class GameEngine {
     private ImagePattern academyPattern;
     private ImagePattern shopPattern;
     private ImagePattern portalPattern;
+    private ImagePattern bossFloorPattern;
 
 
 
@@ -66,6 +67,7 @@ public class GameEngine {
         academyPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Academy.png"))));
         shopPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Shop.png"))));
         portalPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/Portal.png"))));
+        bossFloorPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/BossRoomFloor.png"))));
     }
 
     public void initGame(Hero chosenHero, String skinFileName, com.example.rpg_gui.map.generators.Difficulty diff) {
@@ -142,6 +144,7 @@ public class GameEngine {
                 else if (type==TypeTile.ShopTile) rect.setFill(shopPattern);
                 else if (type==TypeTile.Grass) rect.setFill(grassPattern);
                 else if (type==TypeTile.PortalTile) rect.setFill(portalPattern);
+                else if (type==TypeTile.BossRoomFloor) rect.setFill(bossFloorPattern);
                 else rect.setFill(floorPattern);
 
                 root.getChildren().add(rect);

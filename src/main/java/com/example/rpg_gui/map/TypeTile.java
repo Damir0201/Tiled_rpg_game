@@ -10,7 +10,8 @@ public enum TypeTile {
     AcademyTile('A',true),
     ShopTile('S',true),
     DoorTile('D',true),
-    PortalTile('P', false);
+    PortalTile('P', false),
+    BossRoomFloor('F', false);
 
     private final char symbol;
     private final boolean collision;
