@@ -77,7 +77,7 @@ public class Enemy extends Character {
         } else if (dist>disableChasingRange) {
             targetX=spawnPosition.getMyX();
             targetY=spawnPosition.getMyY();
-            if(enemyPosX==targetX || enemyPosY==targetY) return;
+            if(enemyPosX==targetX && enemyPosY==targetY) return;
         } else{
             return;
         }
