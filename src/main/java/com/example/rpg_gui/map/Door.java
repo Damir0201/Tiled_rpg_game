@@ -23,12 +23,10 @@ public class Door extends Tile implements Interactable {
 
     @Override
     public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
-        if(!isLocked) {
-            System.out.println("The door is already open");
-        }
         if (hero.getInventory().hasKeyCode(this.lockcode)) {
             System.out.println("Door opened successfully!");
             this.isLocked = false;
+            this.setType(TypeTile.Floor);
         } else {
             System.out.println("To open this door you need a key: " + this.lockcode);
         }
