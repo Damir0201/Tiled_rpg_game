@@ -100,10 +100,10 @@ public class GameEngine {
     public void handleInput(KeyCode code) {
         if (gameState.getCurrentState() != GameState.State.PLAYING) return;
         switch (code) {
-            case W -> movementSystem.move(myHero.getPosition(), map, 0, -1);
-            case S -> movementSystem.move(myHero.getPosition(), map, 0, 1);
-            case A -> movementSystem.move(myHero.getPosition(), map, -1, 0);
-            case D -> movementSystem.move(myHero.getPosition(), map, 1, 0);
+            case W -> movementSystem.move(myHero, map, 0, -1, this, uImanager);
+            case S -> movementSystem.move(myHero, map, 0, 1, this, uImanager);
+            case A -> movementSystem.move(myHero, map, -1, 0, this, uImanager);
+            case D -> movementSystem.move(myHero, map, 1, 0, this, uImanager);
             case F -> combatSystem.tryAttack(myHero, map);
             case E -> interactionSystem.interact(myHero, map, this, uImanager);
             case Q -> {myHero.switchAttack();System.out.println("Chosen attack is: "+myHero.getSelectedAttackName());}

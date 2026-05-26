@@ -1,6 +1,10 @@
 package com.example.rpg_gui.map;
 
-public class Door extends Tile{
+import com.example.rpg_gui.Characters.Hero;
+import com.example.rpg_gui.core.GameEngine;
+import com.example.rpg_gui.core.UImanager;
+
+public class Door extends Tile implements Interactable {
     private boolean isLocked=true;
     private final String lockcode;
 
@@ -15,5 +19,19 @@ public class Door extends Tile{
 
     public boolean isLocked() {
         return isLocked;
+    }
+
+    @Override
+    public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
+        if(!isLocked) {
+            System.out.println("The door is already open");
+        }
+        if (hero.getInventory().hasKeyCode(this.lockcode)) {
+            System.out.println("Door opened successfully!");
+            this.isLocked = false;
+            this.setType(TypeTile.Floor);
+        } else {
+            System.out.println("To open this door you need a key: " + this.lockcode);
+        }
     }
 }

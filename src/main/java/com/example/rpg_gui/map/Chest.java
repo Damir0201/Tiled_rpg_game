@@ -1,12 +1,14 @@
 package com.example.rpg_gui.map;
 
+import com.example.rpg_gui.Characters.Hero;
 import com.example.rpg_gui.Items.Item;
-import com.example.rpg_gui.Items.Key;
+import com.example.rpg_gui.core.GameEngine;
+import com.example.rpg_gui.core.UImanager;
 
-public class Chest extends Tile{
+public class Chest extends Tile implements Interactable {
     private int money;
     private boolean isOpened=false;
-    private Item containedItem;
+    private final Item containedItem;
 
     public Chest(int money) {
         super(TypeTile.ChestTile);
@@ -33,7 +35,16 @@ public class Chest extends Tile{
         return isOpened;
     }
 
-    public Item getContainedItem() {
-        return containedItem;
+
+    @Override
+    public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
+        if (!this.isOpened()) {
+            int money = this.openChest();
+            hero.earnMoney(money);
+        }
+        if (this.containedItem != null) {
+            System.out.println("From chest you got " + containedItem.getItemName() + "!");
+            hero.addItem(containedItem);
+        }
     }
 }

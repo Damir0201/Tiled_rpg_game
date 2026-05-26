@@ -30,7 +30,7 @@ public class DungeonGenerator implements MapGenerator{
         for (int i = 0; i < 5; i++) {
             generateTrap(random, tiles, width, height);
         }
-        tiles[height-2][width/2] = new Tile(TypeTile.PortalTile);
+        tiles[height-2][width/2] = new Portal();
     }
     public void generateChests(String bossKeyCode, Tile[][] tiles, int width, int height) {
         Random rand = new Random();
@@ -60,7 +60,7 @@ public class DungeonGenerator implements MapGenerator{
             y= random.nextInt(height);
             x= random.nextInt(width);
         } while(tiles[y][x].getType()!=TypeTile.Floor);
-        tiles[y][x]=new Trap(TypeTile.Trap);
+        tiles[y][x]=new Trap();
     }
     public void roomLocator(Tile[][] tiles, int width, int height, List <Enemy> enemies, Enemy boss) {
         Random rand = new Random();

@@ -9,7 +9,7 @@ public class Tile {
     public TypeTile getType() {
         return type;
     }
-    public void setType(TypeTile type) {
+    protected void setType(TypeTile type) {
         this.type=type;
     }
     public boolean isAllowingMove() {

@@ -1,8 +1,7 @@
 package com.example.rpg_gui.map.generators;
 
 import com.example.rpg_gui.Characters.Enemy;
-import com.example.rpg_gui.map.Tile;
-import com.example.rpg_gui.map.TypeTile;
+import com.example.rpg_gui.map.*;
 
 import java.util.List;
 
@@ -19,9 +18,9 @@ public class HubGenerator implements MapGenerator{
                 }
             }
         }
-        tiles[2][2] = new Tile(TypeTile.AcademyTile);
-        tiles[2][width - 3] = new Tile(TypeTile.ShopTile);
-        tiles[height - 2][width / 2] = new Tile(TypeTile.PortalTile);
+        tiles[2][2] = new Academy();
+        tiles[2][width - 3] = new Shop();
+        tiles[height - 2][width / 2] = new Portal();
         generateRiver(tiles, width, height);
     }
     public void generateRiver(Tile[][] tiles, int width, int height) {
