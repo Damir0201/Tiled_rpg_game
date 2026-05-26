@@ -13,11 +13,11 @@ public class Door extends Tile implements Interactable {
         this.lockcode=lockcode;
     }
 
-    public String getLockcode() {
+    private final String getLockcode() {
         return lockcode;
     }
 
-    public boolean isLocked() {
+    private final boolean isLocked() {
         return isLocked;
     }
 
@@ -29,7 +29,6 @@ public class Door extends Tile implements Interactable {
         if (hero.getInventory().hasKeyCode(this.lockcode)) {
             System.out.println("Door opened successfully!");
             this.isLocked = false;
-            this.setType(TypeTile.Floor);
         } else {
             System.out.println("To open this door you need a key: " + this.lockcode);
         }
