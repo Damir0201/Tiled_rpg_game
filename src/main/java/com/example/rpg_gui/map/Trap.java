@@ -12,7 +12,7 @@ public class Trap extends Tile implements Interactable{
 
     @Override
     public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
-        System.out.println("💥 Trap triggered!");
+        System.out.println("Trap triggered!");
         hero.takeDamage(20);
         this.setType(TypeTile.Floor);
     }
