@@ -15,4 +15,14 @@ public class Academy extends Tile implements Interactable {
         System.out.println("Entering the Academy...");
         academySystem.teachSkills(hero);
     }
+
+    @Override
+    public boolean IsReactedOnStep() {
+        return false;
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
 }

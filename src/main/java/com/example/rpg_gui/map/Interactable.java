@@ -6,4 +6,6 @@ import com.example.rpg_gui.core.UImanager;
 
 public interface Interactable {
     void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager);
+    boolean IsReactedOnStep();
+    boolean isActive();
 }

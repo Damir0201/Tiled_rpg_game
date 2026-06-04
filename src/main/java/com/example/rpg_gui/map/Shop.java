@@ -14,4 +14,14 @@ public class Shop extends Tile implements Interactable {
         System.out.println("Opening shop interface...");
         uiManager.showShop(hero);
     }
+
+    @Override
+    public boolean IsReactedOnStep() {
+        return false;
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
 }

@@ -31,4 +31,14 @@ public class Door extends Tile implements Interactable {
             System.out.println("To open this door you need a key: " + this.lockcode);
         }
     }
+
+    @Override
+    public boolean IsReactedOnStep() {
+        return false;
+    }
+
+    @Override
+    public boolean isActive() {
+        return isLocked;
+    }
 }

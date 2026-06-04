@@ -14,4 +14,14 @@ public class Portal extends Tile implements Interactable {
         System.out.println("Teleporting to dungeon");
         engine.switchMap();
     }
+
+    @Override
+    public boolean IsReactedOnStep() {
+        return false;
+    }
+
+    @Override
+    public boolean isActive() {
+        return true;
+    }
 }

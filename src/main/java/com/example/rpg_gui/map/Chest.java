@@ -8,7 +8,7 @@ import com.example.rpg_gui.core.UImanager;
 public class Chest extends Tile implements Interactable {
     private int money;
     private boolean isOpened=false;
-    private final Item containedItem;
+    private Item containedItem;
 
     public Chest(int money) {
         super(TypeTile.ChestTile);
@@ -45,6 +45,17 @@ public class Chest extends Tile implements Interactable {
         if (this.containedItem != null) {
             System.out.println("From chest you got " + containedItem.getItemName() + "!");
             hero.addItem(containedItem);
+            this.containedItem = null;
         }
+    }
+
+    @Override
+    public boolean IsReactedOnStep() {
+        return false;
+    }
+
+    @Override
+    public boolean isActive() {
+        return !isOpened;
     }
 }
