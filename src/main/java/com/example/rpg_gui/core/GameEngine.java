@@ -1,19 +1,18 @@
 package com.example.rpg_gui.core;
 
-import com.example.rpg_gui.Characters.*;
-import com.example.rpg_gui.Systems.academySystem;
-import com.example.rpg_gui.Systems.interactionSystem;
+import com.example.rpg_gui.Systems.AcademySystem;
+import com.example.rpg_gui.Systems.InteractionSystem;
 import com.example.rpg_gui.map.generators.Difficulty;
 import com.example.rpg_gui.map.generators.DungeonGenerator;
 import com.example.rpg_gui.map.generators.HubGenerator;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyCode;
-import com.example.rpg_gui.Systems.combatSystem;
+import com.example.rpg_gui.Systems.CombatSystem;
 import com.example.rpg_gui.map.Map;
 import com.example.rpg_gui.map.Position;
 import com.example.rpg_gui.map.TypeTile;
-import com.example.rpg_gui.Systems.movementSystem;
+import com.example.rpg_gui.Systems.MovementSystem;
 import com.example.rpg_gui.Characters.Hero;
 import java.util.Objects;
 
@@ -21,14 +20,13 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 
-public class GameEngine {
+public class GameEngine implements Engine{
     private final Pane root;
     private final Pane uiPane;
     private Map map;
     private Map hubMap;
     private Map dungeonMap;
     private Hero myHero;
-    private final int Tile_Size = 32;
     private final GameState gameState = new GameState();
     private Difficulty selectedDifficulty;
 
@@ -70,7 +68,7 @@ public class GameEngine {
         bossFloorPattern = new ImagePattern(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/rpg_gui/images/BossRoomFloor.png"))));
     }
 
-    public void initGame(Hero chosenHero, String skinFileName, com.example.rpg_gui.map.generators.Difficulty diff) {
+    public void initGame(Hero chosenHero, String skinFileName, Difficulty diff) {
         this.selectedDifficulty = diff;
         this.gameState.reset();
         this.hubMap = new Map(10, 15, new HubGenerator(), diff);
@@ -81,10 +79,10 @@ public class GameEngine {
                 getClass().getResourceAsStream("/com/example/rpg_gui/images/" + skinFileName))));
         this.myHero.setPosition(new Position(5, 5));
         GameManager.getInstance().setPlayer(myHero);
-        academySystem.teachSkills(myHero);
+        AcademySystem.teachSkills(myHero);
         render();
     }
-
+    @Override
     public void switchMap() {
         if (this.map == hubMap) {
             this.map = dungeonMap;
@@ -100,23 +98,24 @@ public class GameEngine {
     public void handleInput(KeyCode code) {
         if (gameState.getCurrentState() != GameState.State.PLAYING) return;
         switch (code) {
-            case W -> movementSystem.move(myHero, map, 0, -1, this, uImanager);
-            case S -> movementSystem.move(myHero, map, 0, 1, this, uImanager);
-            case A -> movementSystem.move(myHero, map, -1, 0, this, uImanager);
-            case D -> movementSystem.move(myHero, map, 1, 0, this, uImanager);
-            case F -> combatSystem.tryAttack(myHero, map);
-            case E -> interactionSystem.interact(myHero, map, this, uImanager);
+            case W -> MovementSystem.move(myHero, map, 0, -1, this, uImanager);
+            case S -> MovementSystem.move(myHero, map, 0, 1, this, uImanager);
+            case A -> MovementSystem.move(myHero, map, -1, 0, this, uImanager);
+            case D -> MovementSystem.move(myHero, map, 1, 0, this, uImanager);
+            case F -> CombatSystem.tryAttack(myHero, map);
+            case E -> InteractionSystem.interact(myHero, map, this, uImanager);
             case Q -> {myHero.switchAttack();System.out.println("Chosen attack is: "+myHero.getSelectedAttackName());}
             case KeyCode.X -> uImanager.showInventory (myHero);
         }
         for (var enemy : map.getEnemies()) {
             if (enemy.isAlive()) {
-                enemy.chasingPlayer(myHero.getPosition(), myHero, map);
+                enemy.chasingPlayer(myHero.getPosition(), map);
             }
         }
         render();
     }
 
+    @Override
     public void render(){
         if (root.getScene() == null) {
             return;
@@ -128,11 +127,15 @@ public class GameEngine {
         renderWorld();
         uImanager.drawHUD(uiPane, myHero, map, 800);
     }
+    public Difficulty getSelectedDifficulty() {
+        return this.selectedDifficulty;
+    }
 
     public void renderWorld() {
+        int tile_Size = 32;
         for (int y = 0; y < map.getHeight(); y++) {
             for (int x = 0; x < map.getWidth(); x++) {
-                Rectangle rect = new Rectangle(x * Tile_Size, y * Tile_Size, Tile_Size, Tile_Size);
+                Rectangle rect = new Rectangle(x * tile_Size, y * tile_Size, tile_Size, tile_Size);
                 TypeTile type = map.getTiles()[y][x].getType();
 
                 if (type == TypeTile.Wall) rect.setFill(wallPattern);
@@ -152,12 +155,12 @@ public class GameEngine {
         }
         for (var enemy : map.getEnemies()) {
             if (enemy.isAlive()) {
-                Rectangle enemyRect = new Rectangle(enemy.getPosition().getMyX() * Tile_Size, enemy.getPosition().getMyY() * Tile_Size, Tile_Size, Tile_Size);
+                Rectangle enemyRect = new Rectangle(enemy.getPosition().getMyX() * tile_Size, enemy.getPosition().getMyY() * tile_Size, tile_Size, tile_Size);
                 enemyRect.setFill(orcPattern);
                 root.getChildren().add(enemyRect);
             }
         }
-        Rectangle heroRect = new Rectangle(myHero.getPosition().getMyX() * Tile_Size, myHero.getPosition().getMyY() * Tile_Size, Tile_Size, Tile_Size);
+        Rectangle heroRect = new Rectangle(myHero.getPosition().getMyX() * tile_Size, myHero.getPosition().getMyY() * tile_Size, tile_Size, tile_Size);
         heroRect.setFill(heroPattern);
         root.getChildren().add(heroRect);
     }

@@ -2,7 +2,7 @@ package com.example.rpg_gui.Systems;
 
 import com.example.rpg_gui.Characters.Hero;
 
-public class academySystem {
+public class AcademySystem {
     public static void teachSkills(Hero hero) {
         int level = hero.getLevel();
         switch (hero.getHero()) {

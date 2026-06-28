@@ -5,7 +5,7 @@ public enum TypeTile {
     Wall('#',true),
     Trap('T',false),
     Water('_',true),
-    Grass('G',false),
+    Grass('=',false),
     ChestTile('C',true),
     AcademyTile('A',true),
     ShopTile('S',true),

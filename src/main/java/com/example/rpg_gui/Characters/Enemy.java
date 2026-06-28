@@ -3,7 +3,12 @@ package com.example.rpg_gui.Characters;
 import com.example.rpg_gui.map.Map;
 import com.example.rpg_gui.map.Position;
 
-public class Enemy extends Character {
+public class Enemy extends Character implements Copyable{
+    @Override
+    public Enemy makeCopy() {
+        return new Enemy(this);
+    }
+
     public enum enemyType {DungeonBoss, Monster}
     private final enemyType typeOfEnemy;
     private final int attackPower;
@@ -14,15 +19,30 @@ public class Enemy extends Character {
     public enemyType getEnemyType() {
         return typeOfEnemy;
     }
-    public Enemy (String name, enemyType typeOfEnemy, int attackPower, int detect, int lose) {
-        super (name);
+    public Enemy (String name, enemyType typeOfEnemy, int maxHealth, int attackPower, int detect, int lose) {
+        super(name);
         this.typeOfEnemy = typeOfEnemy;
         this.attackPower = attackPower;
-        this.detectionRange=detect;
-        this.disableChasingRange=lose;
-        if (this.typeOfEnemy == enemyType.DungeonBoss) {
-            this.maxHealth = 200;
-            this.health = this.maxHealth;
+        this.detectionRange = detect;
+        this.disableChasingRange = lose;
+        this.maxHealth = maxHealth;
+        this.health = maxHealth;
+    }
+
+    // 2. Конструктор копирования: берет шаблон и создает его точную уникальную копию
+    public Enemy(Enemy template) {
+        super(template.name);
+        this.typeOfEnemy = template.typeOfEnemy;
+        this.attackPower = template.attackPower;
+        this.detectionRange = template.detectionRange;
+        this.disableChasingRange = template.disableChasingRange;
+        this.maxHealth = template.maxHealth;
+        this.health = template.maxHealth; // Новый монстр рождается полностью здоровым
+        if (template.spawnPosition != null) {
+            // Создаем абсолютно новый объект позиции, чтобы у каждого клона была своя точка
+            this.spawnPosition = new Position(template.spawnPosition.getMyX(), template.spawnPosition.getMyY());
+        } else {
+            this.spawnPosition = null;
         }
     }
 
@@ -54,61 +74,52 @@ public class Enemy extends Character {
     public void restore() {
         this.health = this.maxHealth;
     }
-    public void chasingPlayer(Position hpos, Hero hero, Map currentMap) {
+    public void chasingPlayer(Position hpos, Map currentMap) {
         if(!this.isAlive()) return;
-        int enemyPosX=this.position.getMyX();
-        int enemyPosY=this.position.getMyY();
-        int heroPosX=hpos.getMyX();
-        int heroPosY=hpos.getMyY();
-
-        if (enemyPosX == heroPosX && enemyPosY == heroPosY) {
-            this.enemyAttack(hero);
-            return;
-        }
-
-        int dx=Math.abs(enemyPosX-heroPosX);
-        int dy=Math.abs(enemyPosY-heroPosY);
-        int dist=Math.max(dx,dy);
-
+        int distToHero = this.position.getChebyshevDistance(hpos);
         int targetX, targetY;
-        if(dist<=detectionRange) {
-            targetX=heroPosX;
-            targetY=heroPosY;
-        } else if (dist>disableChasingRange) {
-            targetX=spawnPosition.getMyX();
-            targetY=spawnPosition.getMyY();
-            if(enemyPosX==targetX && enemyPosY==targetY) return;
-        } else{
+
+        if (distToHero <= detectionRange) {
+            targetX = hpos.getMyX();
+            targetY = hpos.getMyY();
+        } else if (distToHero > disableChasingRange) {
+            targetX = spawnPosition.getMyX();
+            targetY = spawnPosition.getMyY();
+            if (this.position.getMyX() == targetX && this.position.getMyY() == targetY) return;
+        } else {
             return;
         }
 
-        int nextX=enemyPosX;
-        int nextY=enemyPosY;
+        int enemyPosX = this.position.getMyX();
+        int enemyPosY = this.position.getMyY();
+        int nextX = enemyPosX;
+        int nextY = enemyPosY;
 
-        if(Math.abs(enemyPosX-targetX)>=Math.abs(enemyPosY-targetY)){
-            if(enemyPosX<targetX) nextX++;
-            else if (enemyPosX>targetX) nextX--;
-        }else {
-            if(enemyPosY<targetY) nextY++;
-            else if (enemyPosY>targetY) nextY--;
+        if (Math.abs(enemyPosX - targetX) >= Math.abs(enemyPosY - targetY)) {
+            if (enemyPosX < targetX) nextX++;
+            else if (enemyPosX > targetX) nextX--;
+        } else {
+            if (enemyPosY < targetY) nextY++;
+            else if (enemyPosY > targetY) nextY--;
         }
-        if (nextX == heroPosX && nextY == heroPosY) {
-            System.out.println("enemy is close to you");
+
+        if (nextX == hpos.getMyX() && nextY == hpos.getMyY()) {
+            System.out.println(this.name + " is close to you!");
         } else if (currentMap.possibleMove(nextX, nextY)) {
             this.moveTo(nextX, nextY);
         }
     }
 
-    public static final Enemy BossA = new Enemy ("Boss A", enemyType.DungeonBoss, 30,3,6);
-    public static final Enemy BossB = new Enemy ("Boss B", enemyType.DungeonBoss, 20,3,6);
-    public static final Enemy MonsterC = new Enemy ("Monster C", enemyType.Monster, 15,3,6);
-    public static final Enemy MonsterD = new Enemy ("Monster D", enemyType.Monster, 15,3,6);
-    public static final Enemy MonsterE = new Enemy ("Monster E", enemyType.Monster, 15,3,6);
-    public static final Enemy MonsterF = new Enemy ("Monster F", enemyType.Monster, 10,3,6);
-    public static final Enemy MonsterG = new Enemy ("Monster G", enemyType.Monster, 10,3,6);
-    public static final Enemy MonsterH = new Enemy ("Monster H", enemyType.Monster, 10,3,6);
-    public static final Enemy MonsterI = new Enemy ("Monster I", enemyType.Monster, 10,3,6);
-    public static final Enemy MonsterJ = new Enemy ("Monster J", enemyType.Monster, 10,3,6);
-    public static final Enemy MonsterK = new Enemy ("Monster K", enemyType.Monster, 5,3,6);
-    public static final Enemy MonsterL = new Enemy ("Monster L", enemyType.Monster, 5,3,6);
+    public static final Enemy BossA = new Enemy ("Boss A", enemyType.DungeonBoss, 200, 30, 2, 6);
+    public static final Enemy BossB = new Enemy ("Boss B", enemyType.DungeonBoss, 150, 20, 2, 6);
+    public static final Enemy MonsterC = new Enemy ("Monster C", enemyType.Monster, 30, 15, 3, 6);
+    public static final Enemy MonsterD = new Enemy ("Monster D", enemyType.Monster, 30, 15, 3, 6);
+    public static final Enemy MonsterE = new Enemy ("Monster E", enemyType.Monster, 30, 15, 3, 6);
+    public static final Enemy MonsterF = new Enemy ("Monster F", enemyType.Monster, 25, 10, 3, 6);
+    public static final Enemy MonsterG = new Enemy ("Monster G", enemyType.Monster, 25, 10, 3, 6);
+    public static final Enemy MonsterH = new Enemy ("Monster H", enemyType.Monster, 25, 10, 3, 6);
+    public static final Enemy MonsterI = new Enemy ("Monster I", enemyType.Monster, 20, 10, 3, 6);
+    public static final Enemy MonsterJ = new Enemy ("Monster J", enemyType.Monster, 20, 10, 3, 6);
+    public static final Enemy MonsterK = new Enemy ("Monster K", enemyType.Monster, 15, 5, 3, 6);
+    public static final Enemy MonsterL = new Enemy ("Monster L", enemyType.Monster, 15, 5, 3, 6);
 }

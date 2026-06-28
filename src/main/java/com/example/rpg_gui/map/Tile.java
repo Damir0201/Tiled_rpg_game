@@ -9,10 +9,16 @@ public class Tile {
     public TypeTile getType() {
         return type;
     }
-    protected void setType(TypeTile type) {
+    private void setType(TypeTile type) {
         this.type=type;
     }
     public boolean isAllowingMove() {
         return !type.isCollision();
+    }
+    public boolean isSafeForGeneration() {
+        return false;
+    }
+    public Interactable asInteractable() {
+        return null;
     }
 }

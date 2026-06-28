@@ -6,8 +6,9 @@ import com.example.rpg_gui.Items.Key;
 
 import java.util.ArrayList;
 
-public class inventorySystem {
-    private ArrayList <Item> items = new ArrayList<Item>();
+public class InventorySystem {
+    private final ArrayList <Item> items = new ArrayList<>();
+
     public ArrayList<Item> getItems() {
         return items;
     }
@@ -19,9 +20,8 @@ public class inventorySystem {
 
     public boolean hasKeyCode(String code) {
         for(Item item:items) {
-            if(item instanceof Key) {
-                Key key=(Key) item;
-                if(key.getKeycode().equals(code)) {
+            if(item instanceof Key key) {
+                if(key.getKeyCode().equals(code)) {
                     return true;
                 }
             }
@@ -35,9 +35,14 @@ public class inventorySystem {
     }
 
     public void useItem (int i, Hero hero) {
+        if (i < 0 || i >= items.size()) {
+            System.out.println("Invalid inventory index!");
+            return;
+        }
         Item item = items.get(i);
         item.use(hero);
-        if (!(item instanceof Key)) {
+
+        if (item.isConsumable()) {
             removeItem(item);
         }
     }

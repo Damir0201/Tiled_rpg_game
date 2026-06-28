@@ -1,7 +1,7 @@
 package com.example.rpg_gui.map;
 
 import com.example.rpg_gui.Characters.Hero;
-import com.example.rpg_gui.core.GameEngine;
+import com.example.rpg_gui.core.Engine;
 import com.example.rpg_gui.core.UImanager;
 
 public class Portal extends Tile implements Interactable {
@@ -10,7 +10,7 @@ public class Portal extends Tile implements Interactable {
     }
 
     @Override
-    public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
+    public void interact(Hero hero, Map map, Engine engine, UImanager uiManager) {
         System.out.println("Teleporting to dungeon");
         engine.switchMap();
     }
@@ -23,5 +23,15 @@ public class Portal extends Tile implements Interactable {
     @Override
     public boolean isActive() {
         return true;
+    }
+
+    @Override
+    public boolean isSafeForGeneration() {
+        return true;
+    }
+
+    @Override
+    public Interactable asInteractable() {
+        return this;
     }
 }

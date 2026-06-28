@@ -7,8 +7,8 @@ import static com.example.rpg_gui.Characters.Hero.HeroType.Archer;
 import static com.example.rpg_gui.Characters.Hero.HeroType.Mage;
 
 public class Weapon extends Item {
-    private int bonusDamage;
-    private Hero.HeroType allowedHero;
+    private final int bonusDamage;
+    private final Hero.HeroType allowedHero;
 
     public int getBonusDamage () {
         return bonusDamage;
@@ -25,8 +25,12 @@ public class Weapon extends Item {
 
     @Override
     public void use(Hero hero) {
-        if (hero == null) return;
-        hero.setEquippedWeapon(this);
+        if (hero.getHero() == this.allowedHero) {
+            hero.setEquippedWeapon(this);
+            System.out.println(getItemName() + " equipped! Bonus damage: +" + bonusDamage);
+        } else {
+            System.out.println("This weapon is not for your class! Required: " + allowedHero);
+        }
     }
     @Override
     public Item copy() {

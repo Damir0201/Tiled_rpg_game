@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.gameOverController">
+<AnchorPane prefHeight="300.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.GameOverController">
    <children>
       <Label layoutX="56.0" layoutY="36.0" text="GAME OVER" textAlignment="CENTER" textFill="#8c0871">
          <padding>

@@ -133,7 +133,7 @@ public class UImanager {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/inventory.fxml"));
             Parent root = loader.load();
 
-            inventoryController controller = loader.getController();
+            InventoryController controller = loader.getController();
             controller.initData(hero);
 
             Stage stage = new Stage();
@@ -153,8 +153,8 @@ public class UImanager {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/shop.fxml"));
             Parent root = loader.load();
 
-            shopController controller = loader.getController();
-            controller.initData(hero, shopSystem.getItemList());
+            ShopController controller = loader.getController();
+            controller.initData(hero, ShopSystem.getItemList());
 
             Stage stage = new Stage();
             stage.setTitle("Shop");
@@ -172,7 +172,7 @@ public class UImanager {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/game_over.fxml"));
             Parent root = loader.load();
-            gameOverController controller = loader.getController();
+            GameOverController controller = loader.getController();
             controller.setMainStage(primaryStage);
             Stage stage = new Stage();
             stage.setTitle("Game Over");
@@ -189,7 +189,7 @@ public class UImanager {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/game_win.fxml"));
             Parent root = loader.load();
-            gameWinController controller = loader.getController();
+            GameWinController controller = loader.getController();
             controller.setMainStage(primaryStage);
             Stage stage = new Stage();
             stage.setTitle("Victory!");

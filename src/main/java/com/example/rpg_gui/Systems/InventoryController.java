@@ -5,7 +5,7 @@ import com.example.rpg_gui.Items.Item;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 
-public class inventoryController {
+public class InventoryController {
     @FXML
     private ListView<String> inventoryListView;
     private Hero hero;

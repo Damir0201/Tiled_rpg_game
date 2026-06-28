@@ -1,8 +1,8 @@
 package com.example.rpg_gui.map;
 
 import com.example.rpg_gui.Characters.Hero;
-import com.example.rpg_gui.Systems.academySystem;
-import com.example.rpg_gui.core.GameEngine;
+import com.example.rpg_gui.Systems.AcademySystem;
+import com.example.rpg_gui.core.Engine;
 import com.example.rpg_gui.core.UImanager;
 
 public class Academy extends Tile implements Interactable {
@@ -11,9 +11,9 @@ public class Academy extends Tile implements Interactable {
     }
 
     @Override
-    public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
+    public void interact(Hero hero, Map map, Engine engine, UImanager uiManager) {
         System.out.println("Entering the Academy...");
-        academySystem.teachSkills(hero);
+        AcademySystem.teachSkills(hero);
     }
 
     @Override
@@ -24,5 +24,10 @@ public class Academy extends Tile implements Interactable {
     @Override
     public boolean isActive() {
         return true;
+    }
+
+    @Override
+    public Interactable asInteractable() {
+        return this;
     }
 }

@@ -31,38 +31,29 @@ public class Map {
     public List<Enemy> getEnemies() {
         return enemies;
     }
-    public int aliveEnemies () {
-        return getEnemies().stream().filter(e -> e.isAlive()).toList().size();
+    public int aliveEnemies() {
+        int count = 0;
+        for (Enemy e : getEnemies()) {
+            if (e.isAlive()) {
+                count++;
+            }
+        }
+        return count;
     }
 
-    public void printMap(Position playerPos) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (playerPos.getMyX() == x && playerPos.getMyY() == y) {
-                    System.out.print("P ");
-                    continue;
-                }
-                Enemy foundEnemy = null;
-                for (Enemy enemy : enemies) {
-                    if (enemy.isAlive() && enemy.getPosition().getMyX() == x && enemy.getPosition().getMyY() == y) {
-                        foundEnemy = enemy;
-                        break;
-                    }
-                }
-                if (foundEnemy != null) {
-                    String symbol = (foundEnemy.getEnemyType() == Enemy.enemyType.DungeonBoss) ? "B " : "E ";
-                    System.out.print(symbol);
-                } else {
-                    System.out.print(tiles[y][x].getType().getSymbol() + " ");
-                }
-            }
-            System.out.println();
-        }
-    }
     public boolean possibleMove(int x, int y) {
         if(y<0||y>=height||x<0||x>=width) {
             return false;
         }
-        return tiles[y][x].isAllowingMove();
+        if (!tiles[y][x].isAllowingMove()) {
+            return false;
+        }
+        for (Enemy e : enemies) {
+            if (e.isAlive() && e.getPosition().getMyX() == x && e.getPosition().getMyY() == y) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

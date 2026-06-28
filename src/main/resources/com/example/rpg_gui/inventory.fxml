@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.inventoryController">
+<AnchorPane prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: Pink; -fx-border-color: #8c0871;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.rpg_gui.Systems.InventoryController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="21.0" prefHeight="54.0" prefWidth="212.0" text="Your inventory" textAlignment="CENTER" textFill="#8c0871">
          <font>

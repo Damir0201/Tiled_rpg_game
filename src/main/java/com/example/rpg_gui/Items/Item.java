@@ -13,6 +13,9 @@ public abstract class Item {
     public Item(String name) {
         this.name=name;
     }
+    public boolean isConsumable() {
+        return true;
+    }
     public String getItemName () {
         return name;
     }

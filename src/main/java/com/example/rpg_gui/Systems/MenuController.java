@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class menuController {
+public class MenuController {
     @FXML private Button startButton;
     @FXML private ToggleGroup heroGroup;
     @FXML private ToggleGroup skinGroup;

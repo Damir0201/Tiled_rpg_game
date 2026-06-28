@@ -4,7 +4,7 @@ import com.example.rpg_gui.Items.*;
 import com.example.rpg_gui.Characters.Hero;
 import java.util.ArrayList;
 
-public class shopSystem {
+public class ShopSystem {
     private static final ArrayList<Item> itemList = new ArrayList<Item>();
 
     static {
@@ -25,7 +25,7 @@ public class shopSystem {
 
         itemList.add(Armor.leatherArmor);
         itemList.add(Armor.ironArmor);
-        itemList.add(Armor.stealArmor);
+        itemList.add(Armor.steelArmor);
     }
 
 

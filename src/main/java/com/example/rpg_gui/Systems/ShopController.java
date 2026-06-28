@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import java.util.ArrayList;
 
-public class shopController {
+public class ShopController {
     @FXML private ListView<String> shopListView;
     @FXML private Label moneyLabel;
 
@@ -38,7 +38,7 @@ public class shopController {
     private void handleBuy() {
         int index = shopListView.getSelectionModel().getSelectedIndex();
         if (index >= 0) {
-            boolean success = shopSystem.buyItem(hero, index);
+            boolean success = ShopSystem.buyItem(hero, index);
             if (success) {
                 updateUI();
             } else {

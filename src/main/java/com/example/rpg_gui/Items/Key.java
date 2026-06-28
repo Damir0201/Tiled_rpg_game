@@ -10,7 +10,7 @@ public class Key extends Item{
         this.keycode=keycode;
     }
 
-    public String getKeycode() {
+    public String getKeyCode() {
         return keycode;
     }
 
@@ -22,5 +22,10 @@ public class Key extends Item{
     @Override
     public void use(Hero hero) {
         System.out.println("You cannot use key");
+    }
+
+    @Override
+    public boolean isConsumable() {
+        return false;
     }
 }

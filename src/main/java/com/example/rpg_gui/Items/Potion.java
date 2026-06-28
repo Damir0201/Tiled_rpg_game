@@ -6,7 +6,7 @@ public class Potion extends Item{
     public enum potionType {Health, Mana}
 
     private final potionType typeOfPotion;
-    private int restoreAmount;
+    private final int restoreAmount;
 
     public Potion(String name, int price, potionType type, int restoreAmount) {
         super(name, price);

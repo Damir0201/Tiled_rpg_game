@@ -9,16 +9,16 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class gameWinController {
+public class GameOverController {
     @FXML
-    private Button startButton;
+    private Button restartButton;
     private Stage mainStage;
     public void setMainStage(Stage stage) {
         this.mainStage = stage;
     }
 
     @FXML
-    void handleStart(ActionEvent event) {
+    void handleRestart(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/rpg_gui/main_menu.fxml"));
             Parent menuRoot = loader.load();
@@ -26,10 +26,9 @@ public class gameWinController {
 
             if (mainStage != null) {
                 mainStage.setScene(menuScene);
-                mainStage.setTitle("RPG Game - Menu");
             }
 
-            Stage currentStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            Stage currentStage = (Stage) restartButton.getScene().getWindow();
             currentStage.close();
 
         } catch (IOException e) {

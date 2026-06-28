@@ -1,7 +1,7 @@
 package com.example.rpg_gui.map;
 
 import com.example.rpg_gui.Characters.Hero;
-import com.example.rpg_gui.core.GameEngine;
+import com.example.rpg_gui.core.Engine;
 import com.example.rpg_gui.core.UImanager;
 
 public class Door extends Tile implements Interactable {
@@ -13,20 +13,33 @@ public class Door extends Tile implements Interactable {
         this.lockcode=lockcode;
     }
 
-    private final String getLockcode() {
+    private String getLockCode() {
         return lockcode;
     }
 
-    private final boolean isLocked() {
+    private boolean isLocked() {
         return isLocked;
     }
 
     @Override
-    public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
+    public TypeTile getType() {
+        if (!this.isLocked) {
+            return TypeTile.Floor;
+        } else {
+            return TypeTile.DoorTile;
+        }
+    }
+
+    @Override
+    public boolean isAllowingMove() {
+        return !isLocked || super.isAllowingMove();
+    }
+
+    @Override
+    public void interact(Hero hero, Map map, Engine engine, UImanager uiManager) {
         if (hero.getInventory().hasKeyCode(this.lockcode)) {
             System.out.println("Door opened successfully!");
             this.isLocked = false;
-            this.setType(TypeTile.Floor);
         } else {
             System.out.println("To open this door you need a key: " + this.lockcode);
         }
@@ -40,5 +53,15 @@ public class Door extends Tile implements Interactable {
     @Override
     public boolean isActive() {
         return isLocked;
+    }
+
+    @Override
+    public boolean isSafeForGeneration() {
+        return true;
+    }
+
+    @Override
+    public Interactable asInteractable() {
+        return this; // Возвращаем себя в качестве интерактивного объекта
     }
 }

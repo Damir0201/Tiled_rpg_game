@@ -8,6 +8,15 @@ public class Position{
         this.myX=myX;
         this.myY=myY;
     }
+
+    public int getManhattanDistance(Position other) {
+        return Math.abs(this.myX - other.getMyX()) + Math.abs(this.myY - other.getMyY());
+    }
+
+    public int getChebyshevDistance(Position other) {
+        return Math.max(Math.abs(this.myX - other.getMyX()), Math.abs(this.myY - other.getMyY()));
+    }
+
     public int getMyX() {
         return myX;
     }

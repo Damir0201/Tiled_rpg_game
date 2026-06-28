@@ -2,7 +2,7 @@ package com.example.rpg_gui.map;
 
 import com.example.rpg_gui.Characters.Hero;
 import com.example.rpg_gui.Items.Item;
-import com.example.rpg_gui.core.GameEngine;
+import com.example.rpg_gui.core.Engine;
 import com.example.rpg_gui.core.UImanager;
 
 public class Chest extends Tile implements Interactable {
@@ -20,12 +20,26 @@ public class Chest extends Tile implements Interactable {
         this.money=money;
         this.containedItem=containedItem;
     }
+
+    @Override
+    public TypeTile getType() {
+        if (this.isOpened) {
+            return TypeTile.Floor;
+        } else {
+            return TypeTile.ChestTile;
+        }
+    }
+
+    @Override
+    public boolean isAllowingMove() {
+        return isOpened || super.isAllowingMove();
+    }
+
     public int openChest() {
         if(!isOpened) {
             isOpened=true;
             int reward=money;
             money=0;
-            this.setType(TypeTile.Floor);
             return reward;
         }
         return 0;
@@ -37,7 +51,7 @@ public class Chest extends Tile implements Interactable {
 
 
     @Override
-    public void interact(Hero hero, Map map, GameEngine engine, UImanager uiManager) {
+    public void interact(Hero hero, Map map, Engine engine, UImanager uiManager) {
         if (!this.isOpened()) {
             int money = this.openChest();
             hero.earnMoney(money);
@@ -57,5 +71,15 @@ public class Chest extends Tile implements Interactable {
     @Override
     public boolean isActive() {
         return !isOpened;
+    }
+
+    @Override
+    public boolean isSafeForGeneration() {
+        return true;
+    }
+
+    @Override
+    public Interactable asInteractable() {
+        return this;
     }
 }

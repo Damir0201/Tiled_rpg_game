@@ -1,6 +1,6 @@
 package com.example.rpg_gui.Characters;
 
-import com.example.rpg_gui.Systems.inventorySystem;
+import com.example.rpg_gui.Systems.InventorySystem;
 import com.example.rpg_gui.Items.*;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ public class Hero extends Character {
     protected int attackDistance;
     protected int currentAttackIndex = 0;
     protected ArrayList<String> learnedAttacks = new ArrayList<String>();
-    protected inventorySystem inventorySystem = new inventorySystem();
+    protected InventorySystem inventorySystem = new InventorySystem();
 
     public HeroType getHero () {return type;}
     public int getMoney () {return money;}
     public int getAttackDistance() {return attackDistance;}
-    public inventorySystem getInventory() {return this.inventorySystem;}
+    public InventorySystem getInventory() {return this.inventorySystem;}
     public int getLevel() {
         return level;
     }
