@@ -77,7 +77,7 @@ public class ConsoleEngine implements Engine{
 
     public void handleConsoleInput(String input) {
         if (gameState.getCurrentState() != GameState.State.PLAYING) {
-            System.out.println("Действие невозможно. Игра окончена или на паузе.");
+            System.out.println("Action is unavailable. Game is over or paused.");
             return;
         }
 
