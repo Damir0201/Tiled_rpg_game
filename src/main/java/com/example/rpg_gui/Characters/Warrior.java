@@ -5,8 +5,8 @@ public class Warrior extends Hero {
     public Warrior() {
         super("Warrior", HeroType.Warrior);
 
-        this.maxHealth = 120;
-        this.health = maxHealth;
+        setMaxHealth(120);
+        setHealth(getMaxHealth());
 
         this.setAttackDistance(1);
     }

@@ -67,11 +67,11 @@ public class ConsoleEngine implements Engine{
         if (this.map == hubMap) {
             this.map = dungeonMap;
             myHero.setPosition(new Position(1, 1));
-            System.out.println("[Событие] Вы вошли в опасное подземелье!");
+            System.out.println("You entered to Dungeon");
         } else {
             this.map = hubMap;
             myHero.setPosition(new Position(1, 1));
-            System.out.println("[Событие] Вы вернулись в безопасный хаб.");
+            System.out.println("You are in hub");
         }
     }
 
@@ -146,29 +146,24 @@ public class ConsoleEngine implements Engine{
 
     @Override
     public void render() {
-        // Проверяем состояние ДО вызова gameState, чтобы перехватить смерть/победу
-        // и не дать uImanager упасть из-за null-стейджа
         if (myHero != null && !myHero.isAlive()) {
             System.out.println("\nGame lose");
             this.isRunning = false;
             return;
         }
         if (map == dungeonMap && map.aliveEnemies() == 0) {
-            System.out.println("\n🎉🎉🎉 WIN! 🎉🎉🎉");
+            System.out.println("\n WIN! ");
             this.isRunning = false;
             return;
         }
 
-        // Обманываем компилятор: скармливаем ему null вместо Stage.
-        // Пока герой жив, этот метод не вызовет showGameOver/showVictory внутри GameState.
         gameState.update(myHero, map, dungeonMap, uImanager, null);
 
         System.out.print("\033[H\033[2J");
         System.out.flush();
 
-        // Консольный интерфейс (HUD)
         System.out.println(" Gamer: " + myHero.getName() + " | HP: " + myHero.getHealth());
-        System.out.println(" Difficulty: " + selectedDifficulty + " (" + selectedDifficulty.monsterCount + " монстров)");
+        System.out.println(" Difficulty: " + selectedDifficulty + " (" + selectedDifficulty.monsterCount + " Monsters");
         System.out.println(" Your attack: " + myHero.getSelectedAttackName());
 
         renderWorld();

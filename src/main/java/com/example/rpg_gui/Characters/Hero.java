@@ -32,9 +32,6 @@ public class Hero extends Character {
         return mana;
     }
     public void setMana(int amount) {this.mana = amount;}
-    public int getMaxHealth() {
-        return this.maxHealth;
-    }
     public int getMaxMana() {
         return this.maxMana;
     }
@@ -56,13 +53,14 @@ public class Hero extends Character {
 
     public void levelUp() {
         level++;
-        maxHealth += 10;
-        health = maxHealth;
+
+        setMaxHealth(getMaxHealth() + 10);
+        setHealth(getMaxHealth());
+
         maxMana += 10;
         mana = maxMana;
 
         System.out.println("Level up to " + level);
-        System.out.println("Go to the Academy to learn new spells");
     }
 
 
@@ -97,14 +95,13 @@ public class Hero extends Character {
     }
 
 
-    public Hero (String name, HeroType type) {
-        super (name);
+    public Hero(String name, HeroType type) {
+        super(name);
         this.type = type;
         this.money = 100;
         this.level = 1;
         this.exp = 0;
-
-        this.health = this.maxHealth;
+        setHealth(getMaxHealth());
         this.mana = this.maxMana;
     }
 
@@ -152,7 +149,7 @@ public class Hero extends Character {
     }
 
 
-    public void checkEnemyDeath (Enemy enemy) {
+    public void checkEnemyDeath(Enemy enemy) {
         if (!enemy.isAlive()) {
             if (enemy.getEnemyType() == Enemy.enemyType.DungeonBoss) {
                 this.gainExp(100);
@@ -160,31 +157,27 @@ public class Hero extends Character {
             } else {
                 this.gainExp(50);
                 this.earnMoney(20);
-                this.health = Math.min (health +50, maxHealth);
-                this.mana = Math.min (mana +50, maxMana);
+                this.restoreHealth(50);
+                this.mana = Math.min(this.mana + 50, maxMana);
             }
         }
     }
 
 
     @Override
-    public void takeDamage (int damage) {
-        if (damage < 0) {
-            throw new IllegalArgumentException("Damage can not be negative");
-        }
-        int defense = this.equippedArmor != null ? this.equippedArmor.getDefenceBonus() : 0;
-        int finalDamage = damage - defense;
-        if (finalDamage < 5) {
-            finalDamage = 5;
-        }
-        this.health -= finalDamage;
+    public void takeDamage(int damage) {
+        if (damage < 0) throw new IllegalArgumentException("Damage can not be negative");
 
-        if (this.health <= 0) {
-            this.health = 0;
+        int defense = this.equippedArmor != null ? this.equippedArmor.getDefenceBonus() : 0;
+        int finalDamage = Math.max(5, damage - defense);
+
+        setHealth(getHealth() - finalDamage);
+
+        if (!isAlive()) {
             System.out.println("You died!");
         } else {
             System.out.println("You took " + finalDamage + " damage!");
-            System.out.println("Your health: " + this.health);
+            System.out.println("Your health: " + getHealth());
         }
     }
 
@@ -207,13 +200,9 @@ public class Hero extends Character {
     }
 
 
-    public void restoreHealth (int amount) {
-        this.health += amount;
-        if (this.health > maxHealth) {
-            this.health = maxHealth;
-        }
-        System.out.println("You restored +" + amount + " health!");
-        System.out.println("Your total health " + this.health + "/" + maxHealth);
+    public void restoreHealth(int amount) {
+        setHealth(getHealth() + amount);
+        System.out.println("You restored +" + amount + " health, Total: " + getHealth());
     }
 
     public void restoreMana (int amount) {
