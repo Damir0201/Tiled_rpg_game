@@ -8,22 +8,22 @@ import java.util.ArrayList;
 public class Hero extends Character {
     public enum HeroType {Warrior, Mage, Archer}
     private final HeroType type;
-    protected Armor equippedArmor;
-    protected Weapon equippedWeapon;
-    protected int mana;
-    protected int maxMana = 100;
-    protected int money;
-    protected int level;
-    protected int exp;
-    protected int maxExp = 100; //exp to next level
-    protected int attackDistance;
-    protected int currentAttackIndex = 0;
-    protected ArrayList<String> learnedAttacks = new ArrayList<String>();
-    protected InventorySystem inventorySystem = new InventorySystem();
+    private Armor equippedArmor;
+    private Weapon equippedWeapon;
+    private int mana;
+    private int maxMana = 100;
+    private int money;
+    private int level;
+    private int exp;
+    private int attackDistance;
+    private int currentAttackIndex = 0;
+    private final ArrayList<String> learnedAttacks = new ArrayList<>();
+    private final InventorySystem inventorySystem = new InventorySystem();
 
     public HeroType getHero () {return type;}
     public int getMoney () {return money;}
     public int getAttackDistance() {return attackDistance;}
+    public void setAttackDistance(int amount) {this.attackDistance = amount;}
     public InventorySystem getInventory() {return this.inventorySystem;}
     public int getLevel() {
         return level;
@@ -31,12 +31,14 @@ public class Hero extends Character {
     public int getMana() {
         return mana;
     }
+    public void setMana(int amount) {this.mana = amount;}
     public int getMaxHealth() {
         return this.maxHealth;
     }
     public int getMaxMana() {
         return this.maxMana;
     }
+    public void setMaxMana(int amount) {this.maxMana = amount;}
     public Armor getEquippedArmor() {return equippedArmor;}
     public Weapon getEquippedWeapon() {return equippedWeapon;}
 
@@ -44,6 +46,7 @@ public class Hero extends Character {
     public void gainExp (int amount) {
         this.exp += amount;
         System.out.println("Gained " + amount + " exp");
+        int maxExp = 100;
         while (this.exp >= maxExp)  {
             this.exp -= maxExp;
             levelUp();

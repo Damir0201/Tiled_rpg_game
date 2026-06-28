@@ -5,14 +5,14 @@ public class Archer extends Hero{
     public Archer() {
         super("Archer", HeroType.Archer);
 
-        this.attackDistance = 3;
+        this.setAttackDistance(3);
     }
 
     @Override
     public void useSelectedAttack(Enemy... enemies) {
         String skill = getSelectedAttackName();
-        int damage = 0;
-        int manaCost = 0;
+        int damage;
+        int manaCost;
         switch (skill) {
             case "Arrow Shot" -> { damage = 25; manaCost = 0; }
             case "Fire Arrow" -> { damage = 30; manaCost = 15; }

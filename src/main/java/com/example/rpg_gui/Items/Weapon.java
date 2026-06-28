@@ -32,6 +32,7 @@ public class Weapon extends Item {
             System.out.println("This weapon is not for your class! Required: " + allowedHero);
         }
     }
+
     @Override
     public Item copy() {
         return new Weapon(getItemName(), getItemPrice(), allowedHero, bonusDamage);

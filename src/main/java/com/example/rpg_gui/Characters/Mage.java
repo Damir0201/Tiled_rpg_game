@@ -4,10 +4,10 @@ public class Mage extends Hero {
     public Mage() {
         super("Mage", HeroType.Mage);
 
-        this.maxMana = (int) (this.maxMana * 1.2);
-        this.mana = this.maxMana;
+        this.setMaxMana((int) (this.getMaxMana() * 1.2));
+        this.setMana(this.getMaxMana());
 
-        this.attackDistance = 2;
+        this.setAttackDistance(2);
     }
 
     @Override

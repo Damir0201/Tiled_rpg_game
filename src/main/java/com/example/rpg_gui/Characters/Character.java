@@ -5,7 +5,7 @@ public abstract class Character implements MovementForAll {
     protected String name;
     protected int health;
     protected int maxHealth=100;
-    protected Position position; // Добавляем сюда
+    protected Position position;
 
     public Character(String name) {
         this.name = name;
@@ -16,7 +16,6 @@ public abstract class Character implements MovementForAll {
         this.position.setMyX(newX);
         this.position.setMyY(newY);
     }
-
 
     public boolean isAlive() {
         return health >0;

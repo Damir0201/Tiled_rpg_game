@@ -8,7 +8,7 @@ public class Warrior extends Hero {
         this.maxHealth = 120;
         this.health = maxHealth;
 
-        this.attackDistance = 1;
+        this.setAttackDistance(1);
     }
 
     @Override
