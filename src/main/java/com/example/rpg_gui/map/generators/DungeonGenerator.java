@@ -21,14 +21,14 @@ public class DungeonGenerator implements MapGenerator{
             }
         }
         tiles[height-2][width/2] = new Portal();
-        Random random=new Random();
+        Random random = new Random();
         generateChests("Boss door", tiles, width, height);
         int room1X, room1Y;
         do {
             room1X=random.nextInt(width - 5 - 2) + 1;
             room1Y=random.nextInt(height - 5 - 2) + 1;
         } while (isOverlappingPortal(tiles, room1X, room1Y));
-        roomLocator(tiles, room1X, room1Y, enemies, Enemy.BossA);
+        roomLocator(tiles, room1X, room1Y, enemies, Enemy.Boss);
         if (diff == Difficulty.HARD) {
             int room2X, room2Y;
             do {
@@ -36,7 +36,7 @@ public class DungeonGenerator implements MapGenerator{
                 room2Y = random.nextInt(height - 5 - 2) + 1;
             } while ((Math.abs(room2X - room1X) < 7 && Math.abs(room2Y - room1Y) < 7) || isOverlappingPortal(tiles, room2X, room2Y));
 
-            roomLocator(tiles, room2X, room2Y, enemies, Enemy.BossB);
+            roomLocator(tiles, room2X, room2Y, enemies, Enemy.Boss);
         }
         spawnEnemies(random, tiles, width, height, enemies, diff.monsterCount);
         for (int i = 0; i < 5; i++) {
@@ -91,16 +91,13 @@ public class DungeonGenerator implements MapGenerator{
                 }
             }
         }
-        Enemy uniqueBoss = boss.makeCopy(); // Полиморфное клонирование через интерфейс!
+        Enemy[] bossArray = boss.makeCopy(1);
+        Enemy uniqueBoss = bossArray[0];
         uniqueBoss.setInitialPosition(startX + 2, startY + 2);
         enemies.add(uniqueBoss);
     }
     public void spawnEnemies(Random random,Tile[][] tiles, int width, int height, List <Enemy> enemies, int limit) {
-        Enemy[] allMonsters = {
-                Enemy.MonsterC, Enemy.MonsterD, Enemy.MonsterE, Enemy.MonsterF,
-                Enemy.MonsterG, Enemy.MonsterH, Enemy.MonsterI, Enemy.MonsterJ,
-                Enemy.MonsterK, Enemy.MonsterL
-        };
+        Enemy[] allMonsters = Enemy.Monster.makeCopy(limit);
         for (int i = 0; i < limit && i < allMonsters.length; i++) {
             int x, y;
             do {
@@ -108,14 +105,12 @@ public class DungeonGenerator implements MapGenerator{
                 x = random.nextInt(width);
             } while (tiles[y][x].getType() != TypeTile.Floor || isSafeZone(tiles, x, y));
 
-            Enemy uniqueMonster = allMonsters[i].makeCopy(); // Просим шаблон размножиться
+            Enemy uniqueMonster = allMonsters[i];
             uniqueMonster.setInitialPosition(x, y);
             enemies.add(uniqueMonster);
         }
     }
-    // 🌟 ИДЕАЛЬНОЕ ООП: Никаких instanceof, только полиморфные вызовы методов
     public boolean isSafeZone(Tile[][] tiles, int x, int y) {
-        // 1. Стартовая зона игрока (1, 1)
         int spawnX = 1;
         int spawnY = 1;
         int safeRadius = 2;
@@ -123,17 +118,14 @@ public class DungeonGenerator implements MapGenerator{
             return true;
         }
 
-        // 2. Проверяем саму клетку — она сама знает, безопасна ли она
         if (tiles[y][x].isSafeForGeneration()) {
             return true;
         }
 
-        // 3. Защита клетки ПЕРЕД дверью (на шаг ниже двери)
         if (y > 0 && tiles[y - 1][x].isSafeForGeneration() && tiles[y - 1][x].getType() == TypeTile.DoorTile) {
             return true;
         }
 
-        // 4. Защита креста вокруг портала
         if ((y > 0 && tiles[y - 1][x].isSafeForGeneration() && tiles[y - 1][x].getType() == TypeTile.PortalTile) ||
                 (y < tiles.length - 1 && tiles[y + 1][x].isSafeForGeneration() && tiles[y + 1][x].getType() == TypeTile.PortalTile) ||
                 (x > 0 && tiles[y][x - 1].isSafeForGeneration() && tiles[y][x - 1].getType() == TypeTile.PortalTile) ||
@@ -144,12 +136,10 @@ public class DungeonGenerator implements MapGenerator{
         return false;
     }
 
-    // 🌟 ИДЕАЛЬНОЕ ООП: Проверка наложения комнат на портал без instanceof
     private boolean isOverlappingPortal(Tile[][] tiles, int startX, int startY) {
         int size = 5;
         for (int y = startY; y < startY + size; y++) {
             for (int x = startX; x < startX + size; x++) {
-                // Если плитка защищена от генерации и это Портал
                 if (tiles[y][x].isSafeForGeneration() && tiles[y][x].getType() == TypeTile.PortalTile) {
                     return true;
                 }

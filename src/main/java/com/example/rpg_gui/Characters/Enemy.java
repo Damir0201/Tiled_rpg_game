@@ -5,8 +5,14 @@ import com.example.rpg_gui.map.Position;
 
 public class Enemy extends Character implements Copyable{
     @Override
-    public Enemy makeCopy() {
-        return new Enemy(this);
+    public Enemy[] makeCopy(int amount) {
+        Enemy[] copies = new Enemy[amount];
+
+        for (int i = 0; i < amount; i++) {
+            copies[i] = new Enemy(this);
+        }
+
+        return copies;
     }
 
     public enum enemyType {DungeonBoss, Monster}
@@ -104,16 +110,6 @@ public class Enemy extends Character implements Copyable{
         }
     }
 
-    public static final Enemy BossA = new Enemy ("Boss A", enemyType.DungeonBoss, 200, 40, 2, 6);
-    public static final Enemy BossB = new Enemy ("Boss B", enemyType.DungeonBoss, 150, 30, 2, 6);
-    public static final Enemy MonsterC = new Enemy ("Monster C", enemyType.Monster, 60, 20, 3, 6);
-    public static final Enemy MonsterD = new Enemy ("Monster D", enemyType.Monster, 60, 20, 3, 6);
-    public static final Enemy MonsterE = new Enemy ("Monster E", enemyType.Monster, 60, 20, 3, 6);
-    public static final Enemy MonsterF = new Enemy ("Monster F", enemyType.Monster, 50, 15, 3, 6);
-    public static final Enemy MonsterG = new Enemy ("Monster G", enemyType.Monster, 50, 15, 3, 6);
-    public static final Enemy MonsterH = new Enemy ("Monster H", enemyType.Monster, 50, 15, 3, 6);
-    public static final Enemy MonsterI = new Enemy ("Monster I", enemyType.Monster, 40, 15, 3, 6);
-    public static final Enemy MonsterJ = new Enemy ("Monster J", enemyType.Monster, 40, 15, 3, 6);
-    public static final Enemy MonsterK = new Enemy ("Monster K", enemyType.Monster, 30, 10, 3, 6);
-    public static final Enemy MonsterL = new Enemy ("Monster L", enemyType.Monster, 30, 10, 3, 6);
+    public static final Enemy Boss = new Enemy ("Boss of Dungeon", enemyType.DungeonBoss, 200, 40, 2, 6);
+    public static final Enemy Monster = new Enemy ("Monster", enemyType.Monster, 60, 20, 3, 6);
 }
