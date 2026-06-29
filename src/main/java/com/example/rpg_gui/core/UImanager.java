@@ -182,6 +182,7 @@ public class UImanager {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error: cannot find game_over.fxml!");
         }
     }
 
@@ -199,6 +200,7 @@ public class UImanager {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("Error: cannot find game_win.fxml!");
         }
     }
 }
