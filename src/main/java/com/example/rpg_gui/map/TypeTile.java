@@ -21,7 +21,6 @@ public enum TypeTile {
         this.symbol=symbol;
     }
     public char getSymbol() {
-
         return symbol;
     }
     public boolean isCollision() {

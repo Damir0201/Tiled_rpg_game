@@ -22,7 +22,6 @@ public class DungeonGenerator implements MapGenerator{
         }
         tiles[height-2][width/2] = new Portal();
         Random random = new Random();
-        generateChests("Boss door", tiles, width, height);
         int room1X, room1Y;
         do {
             room1X=random.nextInt(width - 5 - 2) + 1;
@@ -42,6 +41,7 @@ public class DungeonGenerator implements MapGenerator{
         for (int i = 0; i < 5; i++) {
             generateTrap(random, tiles, width, height);
         }
+        generateChests("Boss door", tiles, width, height);
     }
     public void generateChests(String bossKeyCode, Tile[][] tiles, int width, int height) {
         Random rand = new Random();
